@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>구몬과학 G단계 뷰어</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ══ CSS 변수 ══════════════════════════════════════════════ */
+:root{
+  --bg:#f5f3ef;
+  --surface:#ffffff;
+  --card:#ffffff;
+  --border:#e8e4dc;
+  --ink:#1a1814;
+  --ink-mid:#6a6258;
+  --ink-light:#aaa49c;
+  --accent:#e8401c;
+  --accent-light:#fde8e3;
+  --accent-mid:#f4a48e;
+  --green:#1aad6e;
+  --blue:#1a7fd4;
+  --font:'Noto Sans KR',sans-serif;
+  --mono:'DM Mono',monospace;
+  --shadow:0 2px 12px rgba(0,0,0,0.08);
+  --shadow-lg:0 8px 32px rgba(0,0,0,0.12);
+  --radius:12px;
+}
+body.dark{
+  --bg:#0e0c0a;
+  --surface:#1a1814;
+  --card:#1e1c18;
+  --border:#2a2820;
+  --ink:#d8d0c0;
+  --ink-mid:#6a6258;
+  --ink-light:#3a3830;
+  --accent-light:rgba(232,64,28,0.1);
+  --shadow:0 2px 12px rgba(0,0,0,0.3);
+  --shadow-lg:0 8px 32px rgba(0,0,0,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);height:100vh;display:flex;flex-direction:column;overflow:hidden;transition:background 0.3s,color 0.3s;}
+
+/* ══ 앱 레이아웃 ══════════════════════════════════════════ */
+#app{display:flex;flex-direction:column;height:100vh;}
+
+/* ══ 상단 헤더 ════════════════════════════════════════════ */
+.header{
+  height:52px;background:var(--accent);
+  display:flex;align-items:center;padding:0 16px;gap:12px;
+  flex-shrink:0;box-shadow:0 2px 8px rgba(232,64,28,0.3);
+}
+.header-logo{display:flex;align-items:center;gap:8px;}
+.header-logo-icon{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:white;}
+.header-title{font-size:16px;font-weight:700;color:white;}
+.header-badge{font-size:10px;font-family:var(--mono);background:rgba(255,255,255,0.2);color:white;padding:2px 8px;border-radius:10px;}
+.header-spacer{flex:1;}
+.header-btn{padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.3);background:none;color:white;font-size:12px;font-family:var(--font);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:5px;}
+.header-btn:hover{background:rgba(255,255,255,0.15);}
+
+/* ══ 자료관리 화면 ════════════════════════════════════════ */
+#material-screen{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+
+/* 탭 */
+.ms-tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
+.ms-tab{flex:1;padding:11px 8px;text-align:center;font-size:13px;font-weight:500;color:var(--ink-mid);cursor:pointer;border-bottom:2.5px solid transparent;transition:all 0.15s;}
+.ms-tab.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:700;}
+
+.ms-sub-tabs{display:flex;background:var(--bg);border-bottom:1px solid var(--border);flex-shrink:0;}
+.ms-sub-tab{flex:1;padding:9px 6px;text-align:center;font-size:12px;color:var(--ink-mid);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;}
+.ms-sub-tab.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:700;background:var(--surface);}
+
+/* 검색 바 */
+.ms-search-bar{padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
+.ms-search-wrap{position:relative;}
+.ms-search-input{width:100%;padding:9px 40px 9px 36px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);font-family:var(--font);font-size:13px;color:var(--ink);outline:none;transition:border-color 0.2s;}
+.ms-search-input:focus{border-color:var(--accent);}
+.ms-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink-light);pointer-events:none;font-size:14px;}
+.ms-search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--ink-light);cursor:pointer;font-size:16px;display:none;padding:2px 6px;}
+.ms-search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);max-height:300px;overflow-y:auto;z-index:200;box-shadow:var(--shadow-lg);}
+.ms-sr-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s;}
+.ms-sr-item:last-child{border-bottom:none;}
+.ms-sr-item:hover{background:var(--accent-light);}
+.ms-sr-page{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);min-width:52px;background:var(--accent-light);padding:3px 7px;border-radius:6px;text-align:center;}
+.ms-sr-text{flex:1;font-size:13px;color:var(--ink);line-height:1.4;}
+.ms-sr-text mark{background:rgba(232,64,28,0.15);color:var(--accent);border-radius:2px;padding:0 1px;}
+.ms-sr-go{font-size:11px;color:var(--ink-light);font-family:var(--mono);}
+.ms-no-result{padding:20px;text-align:center;color:var(--ink-mid);font-size:13px;}
+
+/* 필터 바 */
+.ms-filter-bar{padding:8px 14px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.ms-select{padding:6px 12px;border-radius:16px;border:1.5px solid var(--border);background:var(--surface);font-family:var(--font);font-size:12px;color:var(--ink);outline:none;cursor:pointer;}
+.ms-radio-group{display:flex;gap:10px;margin-left:auto;}
+.ms-radio{display:flex;align-items:center;gap:4px;cursor:pointer;font-size:12px;color:var(--ink-mid);}
+.ms-radio input{accent-color:var(--accent);}
+.ms-radio.on{color:var(--accent);font-weight:700;}
+
+/* 목록 */
+.ms-list{flex:1;overflow-y:auto;background:var(--bg);}
+.ms-item{display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border);gap:12px;background:var(--surface);margin-bottom:1px;transition:background 0.1s;}
+.ms-item:hover{background:var(--accent-light);}
+.ms-item-icon{width:40px;height:40px;border-radius:10px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.ms-item-info{flex:1;}
+.ms-item-subject{font-size:14px;font-weight:700;color:var(--ink);}
+.ms-item-sub{font-size:11px;color:var(--ink-mid);font-family:var(--mono);margin-top:2px;}
+.ms-item-done{font-size:10px;padding:2px 7px;border-radius:10px;background:rgba(26,173,110,0.1);color:var(--green);font-family:var(--mono);font-weight:700;margin-top:4px;display:inline-block;}
+.ms-item-actions{display:flex;gap:8px;}
+.ms-del-btn{width:54px;height:34px;border-radius:17px;border:1.5px solid var(--border);background:none;font-size:13px;color:var(--ink-mid);cursor:pointer;transition:all 0.15s;font-family:var(--font);}
+.ms-del-btn:hover{border-color:var(--accent);color:var(--accent);}
+.ms-view-btn{width:54px;height:34px;border-radius:17px;border:none;background:var(--accent);color:white;font-size:13px;font-weight:700;cursor:pointer;transition:opacity 0.15s;font-family:var(--font);}
+.ms-view-btn:hover{opacity:0.85;}
+.ms-empty{text-align:center;padding:48px 20px;color:var(--ink-mid);font-size:13px;line-height:2;}
+
+/* 내문서 업로드 */
+.ms-upload-zone{margin:16px;border:2px dashed var(--border);border-radius:var(--radius);padding:28px;text-align:center;cursor:pointer;transition:all 0.2s;}
+.ms-upload-zone:hover,.ms-upload-zone.drag{border-color:var(--accent);background:var(--accent-light);}
+.ms-upload-icon{font-size:36px;margin-bottom:10px;}
+.ms-upload-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.ms-upload-sub{font-size:12px;color:var(--ink-mid);line-height:1.7;}
+.ms-upload-btn-el{margin-top:14px;padding:9px 22px;border-radius:18px;border:none;background:var(--accent);color:white;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);}
+
+/* ══ PDF 뷰어 화면 ════════════════════════════════════════ */
+#viewer-screen{display:none;flex:1;flex-direction:column;overflow:hidden;}
+#viewer-screen.show{display:flex;}
+
+/* 뷰어 툴바 */
+.vtoolbar{height:46px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:6px;flex-shrink:0;overflow-x:auto;}
+.vt-btn{padding:5px 10px;border-radius:7px;border:1px solid var(--border);background:none;font-size:12px;color:var(--ink-mid);cursor:pointer;transition:all 0.15s;white-space:nowrap;font-family:var(--font);display:flex;align-items:center;gap:4px;}
+.vt-btn:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent);}
+.vt-btn.on{background:var(--accent);color:white;border-color:var(--accent);}
+.vt-sep{width:1px;height:20px;background:var(--border);flex-shrink:0;}
+.vt-info{font-size:11px;font-family:var(--mono);color:var(--ink-mid);white-space:nowrap;}
+.vt-spacer{flex:1;}
+.vt-back{padding:5px 12px;border-radius:7px;border:1px solid var(--border);background:none;font-size:12px;color:var(--ink-mid);cursor:pointer;transition:all 0.15s;font-family:var(--font);}
+.vt-back:hover{background:var(--bg);}
+
+/* PDF 텍스트 검색 바 */
+.pdf-search-bar{height:40px;background:rgba(232,64,28,0.05);border-bottom:1px solid var(--border);display:none;align-items:center;padding:0 12px;gap:8px;flex-shrink:0;}
+.pdf-search-bar.show{display:flex;}
+.pdf-search-inp{flex:1;padding:5px 12px;border-radius:8px;border:1.5px solid var(--accent);background:var(--surface);font-size:12px;color:var(--ink);outline:none;font-family:var(--font);}
+.pdf-scount{font-size:11px;color:var(--ink-mid);font-family:var(--mono);min-width:80px;}
+.pdf-snav{padding:4px 9px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--ink-mid);cursor:pointer;font-size:12px;transition:all 0.15s;}
+.pdf-snav:hover{background:var(--accent);color:white;border-color:var(--accent);}
+.pdf-sclose{padding:4px 7px;border:none;background:none;color:var(--ink-light);cursor:pointer;font-size:14px;}
+
+/* 필기 툴바 */
+.pen-toolbar{height:48px;background:#1e1c18;border-bottom:2px solid var(--accent);display:none;align-items:center;padding:0 14px;gap:10px;flex-shrink:0;overflow-x:auto;}
+.pen-toolbar.show{display:flex;}
+.pt-tool{width:30px;height:30px;border-radius:8px;border:1.5px solid transparent;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.15s;}
+.pt-tool:hover,.pt-tool.on{background:#2a2820;border-color:#4a4840;}
+.pt-color{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.15s;flex-shrink:0;}
+.pt-color:hover,.pt-color.on{border-color:white;transform:scale(1.15);}
+.pt-sep{width:1px;height:20px;background:#2a2820;flex-shrink:0;}
+.pt-size{font-size:11px;color:#6a6860;font-family:var(--mono);}
+.pt-slider{width:60px;accent-color:var(--accent);}
+
+/* 뷰어 본체 */
+.viewer-body{flex:1;display:flex;overflow:hidden;}
+.sidebar{width:90px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;transition:width 0.2s;}
+.sidebar.hidden{width:0;overflow:hidden;}
+.thumb-item{padding:6px;cursor:pointer;border-bottom:1px solid var(--border);position:relative;}
+.thumb-item.cur{background:var(--accent-light);}
+.thumb-canvas{width:72px;height:90px;border-radius:4px;background:#f0ece4;display:block;}
+.thumb-num{text-align:center;font-size:10px;font-family:var(--mono);color:var(--ink-mid);margin-top:3px;}
+.thumb-done{position:absolute;top:8px;right:8px;width:14px;height:14px;border-radius:50%;background:var(--green);display:none;align-items:center;justify-content:center;font-size:8px;color:white;}
+.thumb-done.show{display:flex;}
+
+.viewer-main{flex:1;overflow:auto;background:var(--bg);display:flex;flex-direction:column;align-items:center;padding:16px;gap:12px;position:relative;}
+.page-wrap{position:relative;box-shadow:var(--shadow-lg);background:white;border-radius:4px;}
+.page-wrap canvas{display:block;}
+.page-wrap.done-mark::after{content:'✓';position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.ink-canvas{position:absolute;top:0;left:0;pointer-events:none;}
+.ink-canvas.pen-active{pointer-events:auto;cursor:crosshair;}
+
+/* 상태바 */
+.statusbar{height:28px;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;padding:0 14px;gap:16px;flex-shrink:0;}
+.sb-info{font-size:11px;font-family:var(--mono);color:var(--ink-mid);}
+.sb-spacer{flex:1;}
+
+/* 책갈피 모달 */
+#bookmark-modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.4);display:none;align-items:flex-end;justify-content:center;}
+#bookmark-modal.open{display:flex;}
+.bm-box{background:var(--surface);border-radius:16px 16px 0 0;width:100%;max-width:560px;max-height:75vh;display:flex;flex-direction:column;animation:slideUp 0.25s ease;}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.bm-hdr{padding:14px 18px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.bm-title{font-size:14px;font-weight:700;color:var(--ink);}
+.bm-close{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:none;color:var(--ink-mid);font-size:13px;cursor:pointer;}
+.bm-list{flex:1;overflow-y:auto;}
+.bm-item{display:flex;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s;}
+.bm-item:hover{background:var(--accent-light);}
+.bm-item.cur{background:var(--accent-light);}
+.bm-item.cur .bm-lbl{color:var(--accent);font-weight:700;}
+.bm-lbl{flex:1;font-size:13px;color:var(--ink);}
+.bm-pg{font-size:12px;color:var(--ink-light);font-family:var(--mono);}
+
+/* 토스트 */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(8px);background:#1a1814;color:#d8d0c0;padding:10px 20px;border-radius:20px;font-size:12px;opacity:0;pointer-events:none;transition:all 0.25s;z-index:900;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-logo">
+      <div class="header-logo-icon">과학</div>
+      <div class="header-title">구몬과학 뷰어</div>
+      <div class="header-badge">G단계</div>
+    </div>
+    <div class="header-spacer"></div>
+    <button class="header-btn" onclick="toggleDark()">🌙 다크</button>
+  </div>
+
+  <!-- ① 자료관리 화면 -->
+  <div id="material-screen">
+
+    <!-- 메인 탭 -->
+    <div class="ms-tabs">
+      <div class="ms-tab on" id="ms-tab-library" onclick="switchTab('library')">📂 자료실</div>
+      <div class="ms-tab" id="ms-tab-myfiles" onclick="switchTab('myfiles')">📁 내문서</div>
+    </div>
+
+    <!-- 검색 바 (항상 표시) -->
+    <div class="ms-search-bar">
+      <div class="ms-search-wrap">
+        <span class="ms-search-icon">🔍</span>
+        <input class="ms-search-input" id="ms-search-input"
+          placeholder="단원명, 학습 내용 검색 (예: 지진파, 맨틀, 생물다양성...)"
+          oninput="msSearchLive(this.value)"
+          onkeydown="if(event.key==='Escape') msClearSearch();">
+        <button class="ms-search-clear" id="ms-clear-btn" onclick="msClearSearch()">✕</button>
+        <div class="ms-search-results" id="ms-search-results" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- 자료실 서브탭 -->
+    <div class="ms-sub-tabs" id="ms-sub-tabs">
+      <div class="ms-sub-tab on" id="ms-sub-textbook" onclick="switchSubTab('textbook')">교재</div>
+      <div class="ms-sub-tab" id="ms-sub-answer" onclick="switchSubTab('answer')">해답지</div>
+      <div class="ms-sub-tab" id="ms-sub-worksheet" onclick="switchSubTab('worksheet')">학습지</div>
+    </div>
+
+    <!-- 필터 바 -->
+    <div class="ms-filter-bar" id="ms-filter-bar">
+      <select class="ms-select" id="ms-subject" onchange="renderList()">
+        <option value="all">전체 과목</option>
+        <option value="과학" selected>과학</option>
+        <option value="수학">수학</option>
+        <option value="영어">영어</option>
+        <option value="국어">국어</option>
+      </select>
+      <div class="ms-radio-group">
+        <label class="ms-radio on" id="ms-r-new"><input type="radio" name="ver" value="new" checked onchange="filterVer(this)"> 신교재</label>
+        <label class="ms-radio" id="ms-r-old"><input type="radio" name="ver" value="old" onchange="filterVer(this)"> 구교재</label>
+      </div>
+    </div>
+
+    <!-- 목록 -->
+    <div class="ms-list" id="ms-list"></div>
+
+  </div><!-- #material-screen -->
+
+  <!-- ② PDF 뷰어 화면 -->
+  <div id="viewer-screen">
+
+    <!-- 뷰어 툴바 -->
+    <div class="vtoolbar">
+      <button class="vt-back" onclick="backToMaterial()">← 자료관리</button>
+      <div class="vt-sep"></div>
+      <button class="vt-btn" onclick="chZoom(-10)">−</button>
+      <span class="vt-info" id="vt-zoom">100%</span>
+      <button class="vt-btn" onclick="chZoom(10)">+</button>
+      <button class="vt-btn" onclick="resetZoom()">맞춤</button>
+      <div class="vt-sep"></div>
+      <button class="vt-btn on" id="vt-single" onclick="setLayout('single')">단면</button>
+      <button class="vt-btn" id="vt-double" onclick="setLayout('double')">양면</button>
+      <div class="vt-sep"></div>
+      <button class="vt-btn" id="vt-pen" onclick="togglePen()">✏️ 필기</button>
+      <div class="vt-sep"></div>
+      <button class="vt-btn" id="vt-done" onclick="toggleDone()">✓ 완료</button>
+      <div class="vt-sep"></div>
+      <button class="vt-btn" onclick="openBookmark()">🔖 목차</button>
+      <div class="vt-sep"></div>
+      <button class="vt-btn" onclick="togglePdfSearch()">🔍 검색</button>
+      <div class="vt-sep"></div>
+      <button class="vt-btn" onclick="toggleSidebar()">☰ 목록</button>
+      <div class="vt-spacer"></div>
+      <span class="vt-info" id="vt-page-info">1 / 1</span>
+    </div>
+
+    <!-- PDF 텍스트 검색 바 -->
+    <div class="pdf-search-bar" id="pdf-search-bar">
+      <input class="pdf-search-inp" id="pdf-search-inp"
+        placeholder="PDF 텍스트 검색 (OCR 파일 필요)..."
+        oninput="pdfSearchLive(this.value)"
+        onkeydown="if(event.key==='Enter') pdfNextMatch();if(event.key==='Escape') closePdfSearch();">
+      <span class="pdf-scount" id="pdf-scount">결과 없음</span>
+      <button class="pdf-snav" onclick="pdfPrevMatch()">▲</button>
+      <button class="pdf-snav" onclick="pdfNextMatch()">▼</button>
+      <button class="pdf-sclose" onclick="closePdfSearch()">✕</button>
+    </div>
+
+    <!-- 필기 툴바 -->
+    <div class="pen-toolbar" id="pen-toolbar">
+      <button class="pt-tool on" id="pt-pen" onclick="setTool('pen')" title="펜">🖊</button>
+      <button class="pt-tool" id="pt-hi" onclick="setTool('hi')" title="형광펜">🖍</button>
+      <button class="pt-tool" id="pt-er" onclick="setTool('er')" title="지우개">⬜</button>
+      <div class="pt-sep"></div>
+      <div id="pt-colors" style="display:flex;gap:6px;"></div>
+      <div class="pt-sep"></div>
+      <span class="pt-size">굵기</span>
+      <input type="range" class="pt-slider" id="pt-size" min="1" max="20" value="3" oninput="penSize=+this.value">
+      <div class="pt-sep"></div>
+      <button class="pt-tool" onclick="undoStroke()" title="되돌리기" style="font-size:13px;">↩</button>
+      <button class="pt-tool" onclick="clearPage()" title="이 페이지 지우기" style="font-size:11px;color:#6a6860;">전체삭제</button>
+    </div>
+
+    <!-- 뷰어 본체 -->
+    <div class="viewer-body">
+      <div class="sidebar" id="sidebar">
+        <div id="thumb-list"></div>
+      </div>
+      <div class="viewer-main" id="viewer-main"></div>
+    </div>
+
+    <!-- 상태바 -->
+    <div class="statusbar">
+      <span class="sb-info" id="sb-filename">파일명</span>
+      <div class="sb-spacer"></div>
+      <span class="sb-info" id="sb-page">페이지: 1</span>
+    </div>
+
+  </div><!-- #viewer-screen -->
+
+</div><!-- #app -->
+
+<!-- 책갈피 모달 -->
+<div id="bookmark-modal">
+  <div class="bm-box">
+    <div class="bm-hdr">
+      <div class="bm-title">🔖 목차 · 책갈피</div>
+      <button class="bm-close" onclick="closeBookmark()">✕</button>
+    </div>
+    <div class="bm-list" id="bm-list"></div>
+  </div>
+</div>
+
+<!-- 파일 업로드 input -->
+<input type="file" id="file-input" accept=".pdf" style="display:none" onchange="handleUpload(event)">
+
+<!-- 토스트 -->
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+/* ══ 1. 자료 데이터 ═══════════════════════════════════════ */
+const MATERIALS = [
+  {id:'g1', subject:'과학', stage:'G', label:'G단계 교재', type:'교재', category:'textbook', ver:'new',
+   file:'scienceGlevel-001-010-alocr.pdf', icon:'🔬'},
+];
+
+/* ══ 2. 과학 G단계 목차 인덱스 ════════════════════════════ */
+const SCIENCE_INDEX = [
+  // ─── 샘플 파일 정확한 페이지 매핑 (표지=1, 일람표=2, 세트별=3, 참고=4, G1a=5~) ─
+  {unit:'G 1a (5p)',  page:5,  title:'지구계 및 지권의 특징',    keywords:'지구계 기권 수권 지권 생물권 외권 계 구성요소'},
+  {unit:'G 1b (6p)',  page:6,  title:'생태계·소화계·순환계',     keywords:'생태계 소화계 순환계 기관 입'},
+  {unit:'G 2a (7p)',  page:7,  title:'지구계 기권·수권·지권',    keywords:'지구계 기권 수권 지권 생물권 외권'},
+  {unit:'G 2b (8p)',  page:8,  title:'기권·수권 역할',           keywords:'기권 수권 대기 산소 이산화탄소 호흡 광합성 바다 온도'},
+  {unit:'G 3a (9p)',  page:9,  title:'지권·생물권·외권',         keywords:'지권 생물권 외권 토양 암석 태양 천체'},
+  {unit:'G 3b (10p)', page:10, title:'지구계 상호 영향',         keywords:'화산 폭발 지권 기권 수권 생물권 상호 영향'},
+  {unit:'G 4a (11p)', page:11, title:'태양에너지·지구 내부에너지',keywords:'태양 에너지 지구 내부 에너지 풍화 침식 생명 활동 화산 지진'},
+  {unit:'G 4b (12p)', page:12, title:'물의 순환',                keywords:'물 순환 증발 강수 지하수 기권 수권 열에너지'},
+  {unit:'G 5a (13p)', page:13, title:'지구 내부 직접 조사법',    keywords:'시추 화산 분출물 직접적 방법 지구 내부'},
+  {unit:'G 5b (14p)', page:14, title:'지진파 조사·운석 연구',    keywords:'지진파 조사 운석 연구 간접적 방법'},
+  {unit:'G 6a (15p)', page:15, title:'지진과 지진파',            keywords:'지진 지진파 P파 S파 진원 진앙 사방 전파'},
+  {unit:'G 6b (16p)', page:16, title:'지진파 조사 방법',         keywords:'지진파 조사 효과적 간접적 전파 속도 방향'},
+  {unit:'G 7a (17p)', page:17, title:'지구 내부 층 구조',        keywords:'지각 맨틀 외핵 내핵 지구 내부 삶은 달걀'},
+  {unit:'G 7b (18p)', page:18, title:'P파·S파 속도 변화',        keywords:'P파 S파 Primary Wave Secondary Wave 속도 35km 2900km 5100km'},
+  {unit:'G 8a (19p)', page:19, title:'모호면과 지구 내부 구분',  keywords:'모호면 모호로비치치 불연속면 지각 맨틀 외핵 내핵 속도'},
+  {unit:'G 8b (20p)', page:20, title:'지각의 구조',              keywords:'대륙지각 해양지각 화강암 현무암 두께 35km 5km 모호면'},
+  {unit:'G 9a (21p)', page:21, title:'대륙지각과 해양지각 비교', keywords:'대륙 지각 해양 지각 두께 모호면 깊이 잠긴'},
+  {unit:'G 9b (22p)', page:22, title:'맨틀·외핵·내핵 특성',     keywords:'맨틀 외핵 내핵 유동성 80% 액체 고체 철 니켈 2900 5100'},
+  {unit:'G 10a (23p)',page:23, title:'지권 변화 1 종합 정리',    keywords:'지구계 기권 수권 지권 생물권 외권 화산 폭발 기온'},
+  {unit:'G 10b (24p)',page:24, title:'지구 내부 조사 방법 종합', keywords:'직접 간접 시추 운석 지진파 화산 지각 맨틀 외핵 내핵'},
+  // ─── 전체 교재 단원 목록 ─────────────────────────────
+  {unit:'G 11~20', page:25,  title:'지권의 변화 2 · 암석①',  keywords:'암석 화성암 퇴적암 변성암 종류'},
+  {unit:'G 21~30', page:45,  title:'지권의 변화 3 · 암석②',  keywords:'암석 순환 풍화 침식 퇴적'},
+  {unit:'G 31~40', page:65,  title:'지권의 변화 4 · 광물',    keywords:'광물 굳기 색 자성 특성'},
+  {unit:'G 41~50', page:85,  title:'지권의 변화 5 · 풍화',    keywords:'풍화 토양 기계적 화학적 풍화'},
+  {unit:'G 51~60', page:105, title:'지권의 변화 6 · 대륙이동',keywords:'대륙 이동 판 구조론 경계'},
+  {unit:'G 61~70', page:125, title:'지권의 변화 7 · 화산지진',keywords:'화산 지진 화산대 지진대'},
+  {unit:'G 71~80', page:145, title:'생물의 다양성 1 · 분류',  keywords:'생물 다양성 분류 종'},
+  {unit:'G 81~90', page:165, title:'생물의 다양성 2 · 분류체계',keywords:'계 문 강 목 과 속 종 분류 체계'},
+  {unit:'G 91~100',page:185, title:'생물의 다양성 3 · 보전',  keywords:'생물 다양성 보전 멸종 위기'},
+  {unit:'G 101~110',page:205,title:'기체의 성질 1 · 입자운동',keywords:'기체 입자 운동 확산 증발'},
+  {unit:'G 111~120',page:225,title:'기체의 성질 2 · 보일법칙',keywords:'보일 법칙 압력 부피 반비례'},
+  {unit:'G 121~130',page:245,title:'기체의 성질 3 · 샤를법칙',keywords:'샤를 법칙 온도 부피 비례'},
+  {unit:'G 131~140',page:265,title:'물질의 상태 변화 1',       keywords:'고체 액체 기체 상태'},
+  {unit:'G 141~150',page:285,title:'물질의 상태 변화 2',       keywords:'융해 응고 기화 액화 승화 입자 배열'},
+  {unit:'G 151~160',page:305,title:'물질의 상태 변화 3',       keywords:'열에너지 흡열 발열'},
+  {unit:'G 161~170',page:325,title:'여러 가지 힘 1 · 중력',    keywords:'중력 무게 질량'},
+  {unit:'G 171~180',page:345,title:'여러 가지 힘 2 · 탄성력',  keywords:'탄성력 마찰력 용수철'},
+  {unit:'G 181~190',page:365,title:'여러 가지 힘 3 · 부력',    keywords:'마찰력 부력 아르키메데스'},
+  {unit:'G 191~200',page:385,title:'빛과 파동 1 · 빛',         keywords:'빛 광원 직진 물체 인식'},
+  {unit:'G 201~210',page:405,title:'빛과 파동 2 · 반사',       keywords:'빛 반사 거울 평면 오목 볼록'},
+  {unit:'G 211~220',page:425,title:'빛과 파동 3 · 렌즈',       keywords:'굴절 렌즈 볼록렌즈 오목렌즈'},
+  {unit:'G 221~230',page:445,title:'빛과 파동 4 · 파동',       keywords:'파동 횡파 종파 파장 진폭 진동수'},
+  {unit:'G 231~240',page:465,title:'빛과 파동 5 · 소리',       keywords:'소리 음파 초음파'},
+  {unit:'G 241~250',page:485,title:'과학과 나의 미래',          keywords:'과학 직업 진로'},
+];
+
+/* ══ 3. 앱 상태 ══════════════════════════════════════════ */
+let currentTab='library', currentSubTab='textbook';
+let pdfDoc=null, totalPg=0, curPage=1;
+let zoom=100, layout='single', sidebarOn=true;
+let penMode=false, curTool='pen', penColor='#1a1814', penSize=3, penOpacity=1;
+let isDrawing=false, curStroke=null;
+let inkData={}, pagesDone={};
+let darkMode=false;
+let currentFile=null;
+let pdfSearchMatches=[], pdfSearchIdx=-1, pdfSearchTimer=null;
+
+const PEN_COLORS=['#1a1814','#e8401c','#1a7fd4','#1aad6e','#f5a623','#9b59b6'];
+
+/* ══ 4. 자료관리 ══════════════════════════════════════════ */
+function getMyFiles(){try{return JSON.parse(localStorage.getItem('science-myfiles')||'[]');}catch(e){return[];}}
+function saveMyFiles(arr){localStorage.setItem('science-myfiles',JSON.stringify(arr));}
+function getDone(page){return localStorage.getItem(`science-done-${page}`)==='1';}
+function setDone(page,v){localStorage.setItem(`science-done-${page}`,v?'1':'0');}
+function getInk(page){try{const r=localStorage.getItem(`science-ink-${page}`);return r?JSON.parse(r):[];}catch(e){return[];}}
+function saveInk(page,data){localStorage.setItem(`science-ink-${page}`,JSON.stringify(data));}
+
+function switchTab(tab){
+  currentTab=tab;
+  ['library','myfiles'].forEach(t=>{
+    document.getElementById('ms-tab-'+t).classList.toggle('on',t===tab);
+  });
+  document.getElementById('ms-sub-tabs').style.display=tab==='library'?'':'none';
+  document.getElementById('ms-filter-bar').style.display=tab==='library'?'':'none';
+  renderList();
+}
+
+function switchSubTab(sub){
+  currentSubTab=sub;
+  ['textbook','answer','worksheet'].forEach(s=>{
+    document.getElementById('ms-sub-'+s).classList.toggle('on',s===sub);
+  });
+  renderList();
+}
+
+function filterVer(radio){
+  document.querySelectorAll('.ms-radio').forEach(r=>r.classList.remove('on'));
+  radio.closest('.ms-radio').classList.add('on');
+  renderList();
+}
+
+function renderList(){
+  const list=document.getElementById('ms-list');
+  if(currentTab==='myfiles'){
+    renderMyFiles();return;
+  }
+  const subject=document.getElementById('ms-subject').value;
+  let items=MATERIALS.filter(m=>m.category===currentSubTab);
+  if(subject!=='all') items=items.filter(m=>m.subject===subject);
+  if(!items.length){
+    list.innerHTML=`<div class="ms-empty">📂 해당 자료가 없습니다<br>GitHub에 PDF 파일을 업로드해 주세요</div>`;
+    return;
+  }
+  list.innerHTML=items.map(m=>{
+    let doneCount=0;
+    for(let p=1;p<=totalPg||p<=54;p++) if(getDone(p)) doneCount++;
+    return `<div class="ms-item">
+      <div class="ms-item-icon">${m.icon||'📄'}</div>
+      <div class="ms-item-info">
+        <div class="ms-item-subject">${m.subject} ${m.stage}단계 · ${m.label}</div>
+        <div class="ms-item-sub">${m.type} · ${m.ver==='new'?'신교재':'구교재'}</div>
+        ${doneCount>0?`<span class="ms-item-done">${doneCount}페이지 완료</span>`:''}
+      </div>
+      <div class="ms-item-actions">
+        <button class="ms-view-btn" onclick="openMaterial('${m.id}')">보기</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderMyFiles(){
+  const list=document.getElementById('ms-list');
+  const files=getMyFiles();
+  let html=`<div class="ms-upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+    <div class="ms-upload-icon">📁</div>
+    <div class="ms-upload-title">PDF 파일 추가</div>
+    <div class="ms-upload-sub">클릭하거나 파일을 드래그하세요<br>지원: PDF (OCR 처리된 파일 권장)</div>
+    <button class="ms-upload-btn-el" onclick="event.stopPropagation();document.getElementById('file-input').click()">파일 선택</button>
+  </div>`;
+  if(files.length){
+    html+=files.map(f=>`<div class="ms-item">
+      <div class="ms-item-icon">📄</div>
+      <div class="ms-item-info">
+        <div class="ms-item-subject">${f.name}</div>
+        <div class="ms-item-sub">${(f.size/1024/1024).toFixed(1)}MB · ${f.date}</div>
+      </div>
+      <div class="ms-item-actions">
+        <button class="ms-del-btn" onclick="delMyFile('${f.id}')">삭제</button>
+        <button class="ms-view-btn" onclick="openMyFile('${f.id}')">보기</button>
+      </div>
+    </div>`).join('');
+  }
+  list.innerHTML=html;
+  // 드래그앤드롭
+  const zone=document.getElementById('upload-zone');
+  if(zone){
+    zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag');});
+    zone.addEventListener('dragleave',()=>zone.classList.remove('drag'));
+    zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag');const f=e.dataTransfer.files[0];if(f?.type==='application/pdf') processUpload(f);});
+  }
+}
+
+function handleUpload(e){
+  const f=e.target.files[0];if(!f) return;
+  processUpload(f);e.target.value='';
+}
+function processUpload(file){
+  if(file.type!=='application/pdf'){showToast('PDF 파일만 지원합니다');return;}
+  if(file.size>50*1024*1024){showToast('50MB 이하 파일만 가능합니다');return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const files=getMyFiles();
+    files.unshift({id:'f'+Date.now(),name:file.name,size:file.size,date:new Date().toLocaleDateString('ko-KR'),data:e.target.result});
+    if(files.length>20) files.splice(20);
+    saveMyFiles(files);renderMyFiles();
+    showToast(`"${file.name}" 업로드 완료!`);
+  };
+  reader.readAsDataURL(file);
+}
+function delMyFile(id){
+  if(!confirm('파일을 삭제할까요?')) return;
+  saveMyFiles(getMyFiles().filter(f=>f.id!==id));
+  renderMyFiles();showToast('삭제 완료');
+}
+function openMyFile(id){
+  const f=getMyFiles().find(x=>x.id===id);if(!f) return;
+  currentFile={name:f.name,isCustom:true};
+  loadPdfFromDataUrl(f.data,f.name);
+}
+
+async function openMaterial(id){
+  const m=MATERIALS.find(x=>x.id===id);if(!m) return;
+  currentFile={name:m.file,isCustom:false,material:m};
+  showViewer();
+  showToast('PDF 로딩 중...');
+  try{
+    const doc=await pdfjsLib.getDocument(m.file).promise;
+    pdfDoc=doc;totalPg=doc.numPages;curPage=1;zoom=100;
+    document.getElementById('sb-filename').textContent=m.label;
+    buildThumbs();await renderPages();updatePageInfo();
+  }catch(e){
+    showToast('PDF 로드 실패. 파일을 GitHub에 업로드했는지 확인해 주세요.');
+  }
+}
+
+async function loadPdfFromDataUrl(dataUrl,name){
+  showViewer();
+  try{
+    const b64=atob(dataUrl.split(',')[1]);
+    const arr=new Uint8Array(b64.length);
+    for(let i=0;i<b64.length;i++) arr[i]=b64.charCodeAt(i);
+    const doc=await pdfjsLib.getDocument({data:arr}).promise;
+    pdfDoc=doc;totalPg=doc.numPages;curPage=1;zoom=100;
+    document.getElementById('sb-filename').textContent=name;
+    buildThumbs();await renderPages();updatePageInfo();
+  }catch(e){showToast('PDF 로드 실패: '+e.message);}
+}
+
+function showViewer(){
+  document.getElementById('material-screen').style.display='none';
+  document.getElementById('viewer-screen').classList.add('show');
+}
+function backToMaterial(){
+  document.getElementById('viewer-screen').classList.remove('show');
+  document.getElementById('material-screen').style.display='';
+  renderList();
+}
+
+/* ══ 5. 검색 — 목차 인덱스 ══════════════════════════════ */
+let searchTimer=null;
+function msSearchLive(val){
+  clearTimeout(searchTimer);
+  const clear=document.getElementById('ms-clear-btn');
+  clear.style.display=val?'':'none';
+  if(!val.trim()){document.getElementById('ms-search-results').style.display='none';return;}
+  searchTimer=setTimeout(()=>showSearchResults(val),200);
+}
+function msClearSearch(){
+  document.getElementById('ms-search-input').value='';
+  document.getElementById('ms-search-results').style.display='none';
+  document.getElementById('ms-clear-btn').style.display='none';
+}
+function showSearchResults(query){
+  const q=query.toLowerCase().trim();
+  const results=SCIENCE_INDEX.filter(item=>{
+    const combined=(item.title+' '+(item.keywords||item.kw||'')+' '+item.unit).toLowerCase();
+    return combined.includes(q);
+  }).slice(0,8);
+  const box=document.getElementById('ms-search-results');
+  if(!results.length){
+    box.innerHTML=`<div class="ms-no-result">🔍 "${query}" 검색 결과 없음</div>`;
+  } else {
+    box.innerHTML=results.map(r=>{
+      const hl=r.title.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),m=>`<mark>${m}</mark>`);
+      return `<div class="ms-sr-item" onclick="jumpToIndexPage(${r.page})">
+        <div class="ms-sr-page">${r.unit}</div>
+        <div class="ms-sr-text">${hl}</div>
+        <div class="ms-sr-go">${r.page}p →</div>
+      </div>`;
+    }).join('');
+  }
+  box.style.display='';
+}
+function jumpToIndexPage(page){
+  document.getElementById('ms-search-results').style.display='none';
+  // 과학 G단계 교재 열고 해당 페이지로 이동
+  openMaterial('g1').then?.(()=>{});;
+  setTimeout(()=>{goToPage(page);showToast(`📖 ${page}페이지로 이동`);},1000);
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.ms-search-wrap'))
+    document.getElementById('ms-search-results').style.display='none';
+});
+
+/* ══ 6. PDF 뷰어 렌더 ════════════════════════════════════ */
+async function buildThumbs(){
+  const list=document.getElementById('thumb-list');
+  list.innerHTML='';
+  for(let p=1;p<=totalPg;p++){
+    const item=document.createElement('div');
+    item.className='thumb-item'+(p===curPage?' cur':'');
+    item.id='thumb-'+p;
+    item.onclick=()=>goToPage(p);
+    item.innerHTML=`<canvas class="thumb-canvas" id="tc-${p}"></canvas>
+      <div class="thumb-num">${p}</div>
+      <div class="thumb-done${getDone(p)?' show':''}" id="td-${p}">✓</div>`;
+    list.appendChild(item);
+    // 비동기 썸네일 렌더
+    const page=await pdfDoc.getPage(p);
+    const vp=page.getViewport({scale:0.2});
+    const c=document.getElementById('tc-'+p);
+    c.width=vp.width;c.height=vp.height;
+    await page.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
+  }
+}
+
+async function renderPages(){
+  const main=document.getElementById('viewer-main');
+  main.innerHTML='';
+  const scale=zoom/100;
+  if(layout==='single'){
+    await renderOnePage(main,curPage,scale);
+  } else {
+    const pair=curPage%2===0?[curPage-1,curPage]:[curPage,curPage+1];
+    for(const p of pair){
+      if(p>=1&&p<=totalPg) await renderOnePage(main,p,scale);
+    }
+  }
+  updatePageInfo();
+  // 썸네일 활성화
+  document.querySelectorAll('.thumb-item').forEach(t=>t.classList.remove('cur'));
+  const cur=document.getElementById('thumb-'+curPage);
+  if(cur){cur.classList.add('cur');cur.scrollIntoView({block:'nearest'});}
+}
+
+async function renderOnePage(container,pageNum,scale){
+  const page=await pdfDoc.getPage(pageNum);
+  const vp=page.getViewport({scale});
+  const wrap=document.createElement('div');
+  wrap.className='page-wrap'+(getDone(pageNum)?' done-mark':'');
+  wrap.id='page-wrap-'+pageNum;
+  wrap.style.width=vp.width+'px';wrap.style.height=vp.height+'px';
+  // PDF 캔버스
+  const canvas=document.createElement('canvas');
+  canvas.width=vp.width;canvas.height=vp.height;
+  wrap.appendChild(canvas);
+  // 필기 캔버스
+  const ink=document.createElement('canvas');
+  ink.className='ink-canvas';ink.id='ink-'+pageNum;
+  ink.width=vp.width;ink.height=vp.height;
+  ink.style.width=vp.width+'px';ink.style.height=vp.height+'px';
+  wrap.appendChild(ink);
+  container.appendChild(wrap);
+  await page.render({canvasContext:canvas.getContext('2d'),viewport:vp}).promise;
+  // 저장된 필기 복원
+  drawInk(ink,pageNum);
+  // 필기 이벤트
+  setupInkEvents(ink,pageNum);
+}
+
+/* ══ 7. 필기 ══════════════════════════════════════════════ */
+function setupInkEvents(canvas,pageNum){
+  canvas.addEventListener('pointerdown',e=>{
+    if(!penMode) return;
+    isDrawing=true;curStroke={tool:curTool,color:penColor,size:penSize,opacity:penOpacity,pts:[]};
+    addPt(e,canvas,pageNum);
+  });
+  canvas.addEventListener('pointermove',e=>{if(!isDrawing) return;addPt(e,canvas,pageNum);});
+  canvas.addEventListener('pointerup',()=>{if(!isDrawing) return;isDrawing=false;if(!inkData[pageNum]) inkData[pageNum]=[];inkData[pageNum].push(curStroke);saveInk(pageNum,inkData[pageNum]);curStroke=null;});
+  canvas.addEventListener('pointerleave',()=>{if(isDrawing){isDrawing=false;if(curStroke&&inkData[pageNum]) saveInk(pageNum,inkData[pageNum]);}});
+}
+function addPt(e,canvas,pageNum){
+  const r=canvas.getBoundingClientRect();
+  const x=(e.clientX-r.left)*(canvas.width/r.width);
+  const y=(e.clientY-r.top)*(canvas.height/r.height);
+  if(!curStroke) return;
+  curStroke.pts.push({x,y});
+  const ctx=canvas.getContext('2d');
+  ctx.save();
+  if(curTool==='er'){ctx.globalCompositeOperation='destination-out';ctx.strokeStyle='rgba(0,0,0,1)';ctx.lineWidth=penSize*3;}
+  else if(curTool==='hi'){ctx.globalCompositeOperation='multiply';ctx.strokeStyle=penColor;ctx.lineWidth=penSize*4;ctx.globalAlpha=0.3;}
+  else {ctx.globalCompositeOperation='source-over';ctx.strokeStyle=penColor;ctx.lineWidth=penSize;}
+  ctx.lineCap='round';ctx.lineJoin='round';
+  const pts=curStroke.pts;
+  if(pts.length>=2){ctx.beginPath();ctx.moveTo(pts[pts.length-2].x,pts[pts.length-2].y);ctx.lineTo(x,y);ctx.stroke();}
+  ctx.restore();
+}
+function drawInk(canvas,pageNum){
+  const data=getInk(pageNum);if(!data||!data.length) return;
+  if(!inkData[pageNum]) inkData[pageNum]=data;
+  const ctx=canvas.getContext('2d');
+  data.forEach(stroke=>{
+    if(!stroke.pts||stroke.pts.length<2) return;
+    ctx.save();
+    if(stroke.tool==='er'){ctx.globalCompositeOperation='destination-out';ctx.strokeStyle='rgba(0,0,0,1)';ctx.lineWidth=(stroke.size||3)*3;}
+    else if(stroke.tool==='hi'){ctx.globalCompositeOperation='multiply';ctx.strokeStyle=stroke.color||'#f5a623';ctx.lineWidth=(stroke.size||3)*4;ctx.globalAlpha=0.3;}
+    else {ctx.globalCompositeOperation='source-over';ctx.strokeStyle=stroke.color||'#1a1814';ctx.lineWidth=stroke.size||3;}
+    ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.beginPath();ctx.moveTo(stroke.pts[0].x,stroke.pts[0].y);
+    stroke.pts.forEach(pt=>ctx.lineTo(pt.x,pt.y));ctx.stroke();
+    ctx.restore();
+  });
+}
+function undoStroke(){
+  if(!inkData[curPage]||!inkData[curPage].length) return;
+  inkData[curPage].pop();
+  saveInk(curPage,inkData[curPage]);
+  const c=document.getElementById('ink-'+curPage);
+  if(c){c.getContext('2d').clearRect(0,0,c.width,c.height);drawInk(c,curPage);}
+  showToast('되돌리기');
+}
+function clearPage(){
+  if(!confirm('이 페이지의 필기를 모두 지울까요?')) return;
+  inkData[curPage]=[];saveInk(curPage,[]);
+  const c=document.getElementById('ink-'+curPage);
+  if(c) c.getContext('2d').clearRect(0,0,c.width,c.height);
+  showToast('필기 삭제 완료');
+}
+
+/* ══ 8. 툴바 기능 ════════════════════════════════════════ */
+function chZoom(d){zoom=Math.max(50,Math.min(200,zoom+d));document.getElementById('vt-zoom').textContent=zoom+'%';renderPages();}
+function resetZoom(){zoom=100;document.getElementById('vt-zoom').textContent='100%';renderPages();}
+function setLayout(l){
+  layout=l;
+  document.getElementById('vt-single').classList.toggle('on',l==='single');
+  document.getElementById('vt-double').classList.toggle('on',l==='double');
+  renderPages();
+}
+function toggleSidebar(){
+  sidebarOn=!sidebarOn;
+  document.getElementById('sidebar').classList.toggle('hidden',!sidebarOn);
+}
+function togglePen(){
+  penMode=!penMode;
+  document.getElementById('vt-pen').classList.toggle('on',penMode);
+  const pt=document.getElementById('pen-toolbar');
+  pt.classList.toggle('show',penMode);
+  document.querySelectorAll('.ink-canvas').forEach(c=>c.classList.toggle('pen-active',penMode));
+}
+function setTool(t){
+  curTool=t;
+  ['pen','hi','er'].forEach(x=>document.getElementById('pt-'+x).classList.toggle('on',x===t));
+}
+function toggleDone(){
+  const isDone=!getDone(curPage);
+  setDone(curPage,isDone);
+  const wrap=document.getElementById('page-wrap-'+curPage);
+  if(wrap) wrap.classList.toggle('done-mark',isDone);
+  const td=document.getElementById('td-'+curPage);
+  if(td) td.classList.toggle('show',isDone);
+  document.getElementById('vt-done').classList.toggle('on',isDone);
+  showToast(isDone?`✓ ${curPage}페이지 완료 체크`:`${curPage}페이지 완료 해제`);
+}
+function goToPage(p){
+  curPage=Math.max(1,Math.min(totalPg,p));
+  renderPages();
+  document.getElementById('vt-done').classList.toggle('on',getDone(curPage));
+}
+function updatePageInfo(){
+  document.getElementById('vt-page-info').textContent=`${curPage} / ${totalPg}`;
+  document.getElementById('sb-page').textContent=`페이지: ${curPage}`;
+}
+
+/* ══ 9. 책갈피/목차 ══════════════════════════════════════ */
+function openBookmark(){
+  document.getElementById('bookmark-modal').classList.add('open');
+  const list=document.getElementById('bm-list');
+  list.innerHTML='';
+  // 5페이지씩 묶기
+  for(let i=1;i<=totalPg;i+=5){
+    const end=Math.min(i+4,totalPg);
+    // 인덱스에서 단원명 찾기
+    const idx=SCIENCE_INDEX.find(x=>x.page>=i&&x.page<=end);
+    const label=idx?`${idx.unit} · ${idx.title}`:`G ${i}~${end}`;
+    const isCur=curPage>=i&&curPage<=end;
+    const item=document.createElement('div');
+    item.className='bm-item'+(isCur?' cur':'');
+    item.innerHTML=`<div class="bm-lbl">${label}</div><div class="bm-pg">${Math.ceil(i/5)}p</div>`;
+    item.onclick=()=>{goToPage(i);closeBookmark();};
+    list.appendChild(item);
+  }
+}
+function closeBookmark(){document.getElementById('bookmark-modal').classList.remove('open');}
+
+/* ══ 10. PDF 텍스트 검색 ════════════════════════════════ */
+function togglePdfSearch(){
+  const bar=document.getElementById('pdf-search-bar');
+  const show=bar.classList.toggle('show');
+  if(show) setTimeout(()=>document.getElementById('pdf-search-inp').focus(),100);
+  else closePdfSearch();
+}
+function closePdfSearch(){
+  document.getElementById('pdf-search-bar').classList.remove('show');
+  document.getElementById('pdf-search-inp').value='';
+  pdfSearchMatches=[];pdfSearchIdx=-1;
+  document.getElementById('pdf-scount').textContent='결과 없음';
+}
+function pdfSearchLive(val){
+  clearTimeout(pdfSearchTimer);
+  if(!val.trim()){document.getElementById('pdf-scount').textContent='결과 없음';return;}
+  pdfSearchTimer=setTimeout(()=>runPdfSearch(val),500);
+}
+async function runPdfSearch(query){
+  if(!pdfDoc) return;
+  pdfSearchMatches=[];
+  const q=query.toLowerCase().trim();
+  for(let p=1;p<=totalPg;p++){
+    try{
+      const pg=await pdfDoc.getPage(p);
+      const tc=await pg.getTextContent();
+      const text=tc.items.map(i=>i.str).join(' ').toLowerCase();
+      if(text.includes(q)){
+        const cnt=(text.match(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'))||[]).length;
+        pdfSearchMatches.push({page:p,count:cnt});
+      }
+    }catch(e){}
+  }
+  if(!pdfSearchMatches.length){
+    document.getElementById('pdf-scount').textContent='결과 없음';
+    showToast(`"${query}" 검색 결과 없음`);return;
+  }
+  pdfSearchIdx=0;
+  document.getElementById('pdf-scount').textContent=`1 / ${pdfSearchMatches.length}페이지`;
+  goToPage(pdfSearchMatches[0].page);
+  showToast(`🔍 "${query}" — ${pdfSearchMatches.length}개 페이지 발견`);
+}
+function pdfNextMatch(){
+  if(!pdfSearchMatches.length) return;
+  pdfSearchIdx=(pdfSearchIdx+1)%pdfSearchMatches.length;
+  document.getElementById('pdf-scount').textContent=`${pdfSearchIdx+1} / ${pdfSearchMatches.length}페이지`;
+  goToPage(pdfSearchMatches[pdfSearchIdx].page);
+}
+function pdfPrevMatch(){
+  if(!pdfSearchMatches.length) return;
+  pdfSearchIdx=(pdfSearchIdx-1+pdfSearchMatches.length)%pdfSearchMatches.length;
+  document.getElementById('pdf-scount').textContent=`${pdfSearchIdx+1} / ${pdfSearchMatches.length}페이지`;
+  goToPage(pdfSearchMatches[pdfSearchIdx].page);
+}
+
+/* ══ 11. 다크모드 & 기타 ══════════════════════════════════ */
+function toggleDark(){
+  darkMode=!darkMode;
+  document.body.classList.toggle('dark',darkMode);
+  localStorage.setItem('science-dark',darkMode?'1':'0');
+}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+/* ══ 12. 색상 팔레트 생성 ════════════════════════════════ */
+function buildColorPicker(){
+  const wrap=document.getElementById('pt-colors');
+  PEN_COLORS.forEach((c,i)=>{
+    const d=document.createElement('div');
+    d.className='pt-color'+(i===0?' on':'');
+    d.style.background=c;
+    d.onclick=()=>{
+      penColor=c;
+      document.querySelectorAll('.pt-color').forEach(x=>x.classList.remove('on'));
+      d.classList.add('on');
+    };
+    wrap.appendChild(d);
+  });
+}
+
+/* ══ 13. 키보드 단축키 ════════════════════════════════════ */
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT') return;
+  if((e.ctrlKey||e.metaKey)&&e.key==='f'){e.preventDefault();togglePdfSearch();return;}
+  if(!pdfDoc) return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') goToPage(curPage+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') goToPage(curPage-1);
+  if(e.key==='p'||e.key==='P') togglePen();
+  if((e.ctrlKey||e.metaKey)&&e.key==='z'){e.preventDefault();undoStroke();}
+});
+
+/* ══ 14. 초기화 ══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  if(localStorage.getItem('science-dark')==='1'){darkMode=true;document.body.classList.add('dark');}
+  buildColorPicker();
+  renderList();
+});
+</script>
+</body>
+</html>
