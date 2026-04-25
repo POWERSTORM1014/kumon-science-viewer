@@ -161,7 +161,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);height:100vh;
 .thumb-item{padding:6px;cursor:pointer;border-bottom:1px solid var(--border);position:relative;}
 .thumb-item.cur{background:var(--accent-light);}
 .thumb-canvas{width:72px;height:90px;border-radius:4px;background:#f0ece4;display:block;}
-.thumb-num{text-align:center;font-size:10px;font-family:var(--mono);color:var(--ink-mid);margin-top:3px;}
+.thumb-num{text-align:center;font-size:10px;font-family:var(--mono);color:var(--ink-mid);margin-top:3px;line-height:1.3;}
+.thumb-label{font-size:9px;color:var(--ink-light);text-align:center;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:72px;}
+.thumb-item.front-page .thumb-canvas{opacity:0.7;}
+.thumb-item.front-page .thumb-num{color:var(--ink-light);}
 .thumb-done{position:absolute;top:8px;right:8px;width:14px;height:14px;border-radius:50%;background:var(--green);display:none;align-items:center;justify-content:center;font-size:8px;color:white;}
 .thumb-done.show{display:flex;}
 
@@ -178,11 +181,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);height:100vh;
 .sb-spacer{flex:1;}
 
 /* 책갈피 모달 */
-#bookmark-modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.4);display:none;align-items:flex-end;justify-content:center;}
+#bookmark-modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.4);display:none;align-items:stretch;justify-content:flex-end;}
 #bookmark-modal.open{display:flex;}
-.bm-box{background:var(--surface);border-radius:16px 16px 0 0;width:100%;max-width:560px;max-height:75vh;display:flex;flex-direction:column;animation:slideUp 0.25s ease;}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.bm-hdr{padding:14px 18px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.bm-box{background:var(--surface);border-radius:16px 0 0 16px;width:min(340px,88vw);height:100%;display:flex;flex-direction:column;animation:slideInRight 0.28s cubic-bezier(.22,.68,0,1.2);}
+@keyframes slideInRight{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+.bm-hdr{padding:16px 18px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .bm-title{font-size:14px;font-weight:700;color:var(--ink);}
 .bm-close{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:none;color:var(--ink-mid);font-size:13px;cursor:pointer;}
 .bm-list{flex:1;overflow-y:auto;}
@@ -636,12 +639,19 @@ async function buildThumbs(){
   const list=document.getElementById('thumb-list');
   list.innerHTML='';
   for(let p=1;p<=totalPg;p++){
+    // PAGE_MAP에서 페이지 정보 가져오기
+    const entry = typeof PAGE_MAP!=='undefined' ? PAGE_MAP.find(x=>x.pdf===p) : null;
+    const isFront = entry && entry.type==='front';
+    const mainLabel = entry ? entry.label : String(p);
+    const subLabel  = entry ? (isFront ? entry.sub : '') : '';
+
     const item=document.createElement('div');
-    item.className='thumb-item'+(p===curPage?' cur':'');
+    item.className='thumb-item'+(p===curPage?' cur':'')+(isFront?' front-page':'');
     item.id='thumb-'+p;
     item.onclick=()=>goToPage(p);
     item.innerHTML=`<canvas class="thumb-canvas" id="tc-${p}"></canvas>
-      <div class="thumb-num">${p}</div>
+      <div class="thumb-num">${mainLabel}</div>
+      ${subLabel ? `<div class="thumb-label">${subLabel}</div>` : ''}
       <div class="thumb-done${getDone(p)?' show':''}" id="td-${p}">✓</div>`;
     list.appendChild(item);
     // 비동기 썸네일 렌더
