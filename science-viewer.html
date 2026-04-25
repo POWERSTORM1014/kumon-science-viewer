@@ -796,27 +796,110 @@ function goToPage(p){
   document.getElementById('vt-done').classList.toggle('on',getDone(curPage));
 }
 function updatePageInfo(){
+  // 실제 교재 페이지 계산 (PDF 5페이지 = 교재 1번)
+  let eduLabel = '';
+  if(typeof PAGE_MAP !== 'undefined'){
+    const entry = PAGE_MAP.find(x=>x.pdf===curPage);
+    if(entry){
+      eduLabel = entry.type==='front' ? ` · ${entry.label}` : ` · ${entry.label} (교재 ${entry.edu}번)`;
+    }
+  }
   document.getElementById('vt-page-info').textContent=`${curPage} / ${totalPg}`;
-  document.getElementById('sb-page').textContent=`페이지: ${curPage}`;
+  document.getElementById('sb-page').textContent=`PDF ${curPage}p${eduLabel}`;
 }
+
+
+/* ══ 교재 페이지 구성표 ════════════════════════════════════
+   PDF페이지  실제구성          교재번호(앞면a/뒷면b)
+   ─────────────────────────────────────────────────────── */
+const PAGE_MAP = [
+  // 앞부분 4페이지 (페이지 번호 없음)
+  {pdf:1, label:'표지',                  sub:'구몬과학 G단계', type:'front'},
+  {pdf:2, label:'G교재 내용 일람표',     sub:'단원별 목록',    type:'front'},
+  {pdf:3, label:'G단계 세트별 교재 내용',sub:'학습 내용 일람', type:'front'},
+  {pdf:4, label:'G단계 참고사항',        sub:'개념 요약 정리', type:'front'},
+  // 본문 20페이지 (G1a~G10b)
+  {pdf:5,  label:'G 1a', sub:'지권의 변화 1 · 지구계 및 지권의 특징 (앞)', type:'content', edu:1},
+  {pdf:6,  label:'G 1b', sub:'지권의 변화 1 · 생태계·소화계·순환계 (뒤)',  type:'content', edu:1},
+  {pdf:7,  label:'G 2a', sub:'지권의 변화 1 · 지구계 구성 요소 (앞)',       type:'content', edu:2},
+  {pdf:8,  label:'G 2b', sub:'지권의 변화 1 · 기권·수권의 역할 (뒤)',       type:'content', edu:2},
+  {pdf:9,  label:'G 3a', sub:'지권의 변화 1 · 지권·생물권·외권 (앞)',       type:'content', edu:3},
+  {pdf:10, label:'G 3b', sub:'지권의 변화 1 · 지구계 상호 영향 (뒤)',       type:'content', edu:3},
+  {pdf:11, label:'G 4a', sub:'지권의 변화 1 · 태양에너지와 지구계 (앞)',    type:'content', edu:4},
+  {pdf:12, label:'G 4b', sub:'지권의 변화 1 · 물의 순환 (뒤)',              type:'content', edu:4},
+  {pdf:13, label:'G 5a', sub:'지권의 변화 1 · 지구 내부 직접 조사법 (앞)', type:'content', edu:5},
+  {pdf:14, label:'G 5b', sub:'지권의 변화 1 · 지진파 조사·운석 연구 (뒤)', type:'content', edu:5},
+  {pdf:15, label:'G 6a', sub:'지권의 변화 1 · 지진과 지진파 (앞)',          type:'content', edu:6},
+  {pdf:16, label:'G 6b', sub:'지권의 변화 1 · 지진파 조사 방법 (뒤)',       type:'content', edu:6},
+  {pdf:17, label:'G 7a', sub:'지권의 변화 1 · 지구 내부 층 구조 (앞)',      type:'content', edu:7},
+  {pdf:18, label:'G 7b', sub:'지권의 변화 1 · P파·S파 속도 변화 (뒤)',      type:'content', edu:7},
+  {pdf:19, label:'G 8a', sub:'지권의 변화 1 · 모호면과 지구 내부 (앞)',     type:'content', edu:8},
+  {pdf:20, label:'G 8b', sub:'지권의 변화 1 · 지각의 구조 (뒤)',            type:'content', edu:8},
+  {pdf:21, label:'G 9a', sub:'지권의 변화 1 · 대륙지각·해양지각 (앞)',      type:'content', edu:9},
+  {pdf:22, label:'G 9b', sub:'지권의 변화 1 · 맨틀·외핵·내핵 (뒤)',         type:'content', edu:9},
+  {pdf:23, label:'G 10a',sub:'지권의 변화 1 · 종합 정리 (앞)',              type:'content', edu:10},
+  {pdf:24, label:'G 10b',sub:'지권의 변화 1 · 지구 내부 조사 종합 (뒤)',    type:'content', edu:10},
+];
 
 /* ══ 9. 책갈피/목차 ══════════════════════════════════════ */
 function openBookmark(){
   document.getElementById('bookmark-modal').classList.add('open');
   const list=document.getElementById('bm-list');
   list.innerHTML='';
-  // 5페이지씩 묶기
-  for(let i=1;i<=totalPg;i+=5){
-    const end=Math.min(i+4,totalPg);
-    // 인덱스에서 단원명 찾기
-    const idx=SCIENCE_INDEX.find(x=>x.page>=i&&x.page<=end);
-    const label=idx?`${idx.unit} · ${idx.title}`:`G ${i}~${end}`;
-    const isCur=curPage>=i&&curPage<=end;
-    const item=document.createElement('div');
-    item.className='bm-item'+(isCur?' cur':'');
-    item.innerHTML=`<div class="bm-lbl">${label}</div><div class="bm-pg">${Math.ceil(i/5)}p</div>`;
-    item.onclick=()=>{goToPage(i);closeBookmark();};
-    list.appendChild(item);
+
+  // 섹션 구분선 헬퍼
+  function addSection(title){
+    const sec=document.createElement('div');
+    sec.style.cssText='padding:6px 16px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-light);background:var(--bg);border-bottom:1px solid var(--border);';
+    sec.textContent=title;
+    list.appendChild(sec);
+  }
+
+  // 사용 가능한 페이지 맵 (또는 기본 생성)
+  const map = typeof PAGE_MAP !== 'undefined' ? PAGE_MAP : [];
+
+  if(map.length && totalPg <= map.length + 1){
+    // ── PAGE_MAP 기반 표시 ──
+    addSection('앞부분 · 참고자료');
+    map.forEach(entry=>{
+      const isCur = curPage === entry.pdf;
+      const row=document.createElement('div');
+      row.className='bm-item'+(isCur?' cur':'');
+
+      // 페이지 번호 표시: 앞부분은 -, 본문은 교재번호
+      const pgLabel = entry.type==='front'
+        ? `—`
+        : `G${entry.edu}`;
+
+      // 섹션 구분: 앞부분 → 본문 전환
+      if(entry.pdf===5){
+        addSection('본문 · G1a ~ G10b');
+      }
+
+      row.innerHTML=`
+        <div style="display:flex;flex-direction:column;gap:2px;flex:1;">
+          <div style="font-size:13px;font-weight:${isCur?'700':'500'};color:${isCur?'var(--accent)':'var(--ink)'};">${entry.label}</div>
+          <div style="font-size:11px;color:var(--ink-mid);">${entry.sub}</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:11px;color:${isCur?'var(--accent)':'var(--ink-light)'};min-width:28px;text-align:right;">${pgLabel}</div>
+      `;
+      row.onclick=()=>{goToPage(entry.pdf);closeBookmark();};
+      list.appendChild(row);
+    });
+
+  } else {
+    // ── 기본 5페이지씩 묶기 (PAGE_MAP 없을 때) ──
+    for(let i=1;i<=totalPg;i+=5){
+      const end=Math.min(i+4,totalPg);
+      const idx=SCIENCE_INDEX.find(x=>x.page>=i&&x.page<=end);
+      const label=idx?`${idx.unit} · ${idx.title}`:`페이지 ${i}~${end}`;
+      const isCur=curPage>=i&&curPage<=end;
+      const item=document.createElement('div');
+      item.className='bm-item'+(isCur?' cur':'');
+      item.innerHTML=`<div class="bm-lbl">${label}</div><div class="bm-pg">${Math.ceil(i/5)}p</div>`;
+      item.onclick=()=>{goToPage(i);closeBookmark();};
+      list.appendChild(item);
+    }
   }
 }
 function closeBookmark(){document.getElementById('bookmark-modal').classList.remove('open');}
