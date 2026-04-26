@@ -1166,7 +1166,8 @@ function summaryNav(dir){
 
 function goToSummaryPage(){
   goToPage(summaryCurrentPage);
-  closeSummary();
+  showToast(`📖 ${summaryCurrentPage}페이지로 이동`);
+  // 패널은 닫지 않고 계속 표시
 }
 
 function closeSummary(){
