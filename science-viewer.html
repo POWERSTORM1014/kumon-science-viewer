@@ -70,8 +70,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);height:100vh;
 .ms-sub-tab{flex:1;padding:9px 6px;text-align:center;font-size:12px;color:var(--ink-mid);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;}
 .ms-sub-tab.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:700;background:var(--surface);}
 
-/* 검색 바 */
-.ms-search-bar{padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
+/* 검색 하이라이트 레이어 */
+.hl-layer{position:absolute;top:0;left:0;pointer-events:none;overflow:hidden;}
+.hl-box{position:absolute;background:rgba(255,214,0,0.45);border:1.5px solid rgba(255,170,0,0.7);border-radius:3px;pointer-events:none;animation:hlPop 0.2s ease;}
+.hl-box.current{background:rgba(255,100,0,0.45);border-color:rgba(232,64,28,0.9);}
+@keyframes hlPop{from{opacity:0;transform:scale(0.92);}to{opacity:1;transform:scale(1);}}padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
 .ms-search-wrap{position:relative;}
 .ms-search-input{width:100%;padding:9px 40px 9px 36px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);font-family:var(--font);font-size:13px;color:var(--ink);outline:none;transition:border-color 0.2s;}
 .ms-search-input:focus{border-color:var(--accent);}
@@ -474,7 +477,7 @@ let isDrawing=false, curStroke=null;
 let inkData={}, pagesDone={};
 let darkMode=false;
 let currentFile=null;
-let pdfSearchMatches=[], pdfSearchIdx=-1, pdfSearchTimer=null;
+let pdfSearchMatches=[], pdfSearchIdx=-1, pdfSearchTimer=null, pdfSearchQuery='';
 
 const PEN_COLORS=['#1a1814','#e8401c','#1a7fd4','#1aad6e','#f5a623','#9b59b6'];
 
@@ -731,6 +734,8 @@ async function renderPages(){
   document.querySelectorAll('.thumb-item').forEach(t=>t.classList.remove('cur'));
   const cur=document.getElementById('thumb-'+curPage);
   if(cur){cur.classList.add('cur');cur.scrollIntoView({block:'nearest'});}
+  // 검색 하이라이트 갱신
+  if(pdfSearchQuery) await refreshHighlights();
 }
 
 async function renderOnePage(container,pageNum,scale){
@@ -744,6 +749,12 @@ async function renderOnePage(container,pageNum,scale){
   const canvas=document.createElement('canvas');
   canvas.width=vp.width;canvas.height=vp.height;
   wrap.appendChild(canvas);
+  // 하이라이트 레이어 (검색어 표시용)
+  const hlLayer=document.createElement('div');
+  hlLayer.className='hl-layer';
+  hlLayer.id='hl-layer-'+pageNum;
+  hlLayer.style.width=vp.width+'px';hlLayer.style.height=vp.height+'px';
+  wrap.appendChild(hlLayer);
   // 필기 캔버스
   const ink=document.createElement('canvas');
   ink.className='ink-canvas';ink.id='ink-'+pageNum;
@@ -756,6 +767,8 @@ async function renderOnePage(container,pageNum,scale){
   drawInk(ink,pageNum);
   // 필기 이벤트
   setupInkEvents(ink,pageNum);
+  // 검색 하이라이트 복원
+  if(pdfSearchQuery) await applyHighlight(pageNum,vp,pdfSearchQuery);
 }
 
 /* ══ 7. 필기 ══════════════════════════════════════════════ */
@@ -1185,6 +1198,8 @@ function closePdfSearch(){
   document.getElementById('pdf-search-bar').classList.remove('show');
   document.getElementById('pdf-search-inp').value='';
   pdfSearchMatches=[];pdfSearchIdx=-1;
+  pdfSearchQuery='';
+  clearHighlights();
   document.getElementById('pdf-scount').textContent='결과 없음';
 }
 function pdfSearchLive(val){
@@ -1195,6 +1210,7 @@ function pdfSearchLive(val){
 async function runPdfSearch(query){
   if(!pdfDoc) return;
   pdfSearchMatches=[];
+  pdfSearchQuery=query.trim();
   const q=query.toLowerCase().trim();
   for(let p=1;p<=totalPg;p++){
     try{
@@ -1209,13 +1225,95 @@ async function runPdfSearch(query){
   }
   if(!pdfSearchMatches.length){
     document.getElementById('pdf-scount').textContent='결과 없음';
-    showToast(`"${query}" 검색 결과 없음`);return;
+    showToast(`"${query}" 검색 결과 없음`);
+    pdfSearchQuery='';
+    return;
   }
   pdfSearchIdx=0;
   document.getElementById('pdf-scount').textContent=`1 / ${pdfSearchMatches.length}페이지`;
   goToPage(pdfSearchMatches[0].page);
   showToast(`🔍 "${query}" — ${pdfSearchMatches.length}개 페이지 발견`);
 }
+
+/* ══ 검색 키워드 하이라이트 ═══════════════════════════════ */
+async function applyHighlight(pageNum, vp, query){
+  const layer = document.getElementById('hl-layer-'+pageNum);
+  if(!layer) return;
+  layer.innerHTML = '';
+  if(!query) return;
+  const q = query.toLowerCase().trim();
+  try{
+    const page = await pdfDoc.getPage(pageNum);
+    const tc = await page.getTextContent();
+    const pageH = vp.height;
+
+    tc.items.forEach(item=>{
+      const str = item.str.toLowerCase();
+      if(!str.includes(q)) return;
+
+      // PDF 좌표 → 화면 좌표 변환
+      // item.transform = [scaleX, skewY, skewX, scaleY, x, y] (PDF 좌표계, y는 하단 기준)
+      const tx = item.transform;
+      const pdfX = tx[4];
+      const pdfY = tx[5];
+      const fw   = item.width;
+      const fh   = Math.abs(tx[3]) || item.height || 12;
+
+      // PDF.js viewport transform 적용
+      const [a,b,c,d,e,f] = vp.transform;
+      const screenX = a*pdfX + c*pdfY + e;
+      const screenY = b*pdfX + d*pdfY + f;
+
+      // 키워드 위치 정밀 계산 (글자 단위)
+      const fullLen = item.str.length;
+      const charW = fw > 0 ? fw / fullLen : 8;
+      let searchFrom = 0;
+      let strLower = str;
+      while(true){
+        const idx = strLower.indexOf(q, searchFrom);
+        if(idx < 0) break;
+        // 키워드 시작 X 오프셋 (글자폭 기준)
+        const offsetX = idx * charW * (a || 1);
+        const kwW = q.length * charW * Math.abs(a || 1);
+        const kwH = fh * Math.abs(d || 1);
+
+        const box = document.createElement('div');
+        box.className = 'hl-box';
+        // 현재 포커스된 페이지면 current 색상
+        const focusPage = pdfSearchMatches[pdfSearchIdx]?.page;
+        if(pageNum === focusPage) box.classList.add('current');
+
+        box.style.left   = (screenX + offsetX - 2) + 'px';
+        box.style.top    = (screenY - kwH - 2) + 'px';
+        box.style.width  = (kwW + 4) + 'px';
+        box.style.height = (kwH + 4) + 'px';
+        layer.appendChild(box);
+
+        searchFrom = idx + q.length;
+      }
+    });
+  }catch(e){}
+}
+
+/* 모든 열린 페이지의 하이라이트를 갱신 */
+async function refreshHighlights(){
+  if(!pdfSearchQuery){ clearHighlights(); return; }
+  const scale = zoom/100;
+  const pages = layout==='single' ? [curPage]
+    : (curPage%2===0 ? [curPage-1,curPage] : [curPage,curPage+1]);
+  for(const p of pages){
+    if(p<1||p>totalPg) continue;
+    const page = await pdfDoc.getPage(p);
+    const vp = page.getViewport({scale});
+    await applyHighlight(p, vp, pdfSearchQuery);
+  }
+}
+
+/* 하이라이트 전체 제거 */
+function clearHighlights(){
+  document.querySelectorAll('.hl-layer').forEach(l=>l.innerHTML='');
+}
+
 function pdfNextMatch(){
   if(!pdfSearchMatches.length) return;
   pdfSearchIdx=(pdfSearchIdx+1)%pdfSearchMatches.length;
