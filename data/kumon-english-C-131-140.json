@@ -1,0 +1,540 @@
+{
+  "key": "kumon-english-C-131-140",
+  "subject": "english",
+  "subjectKo": "영어",
+  "emoji": "🔤",
+  "color": "#4A0E8F",
+  "stage": "C",
+  "pages": "131-140",
+  "title": "단원: 감탄문 (What a small cabbage this is!)  |  총 20페이지 (C131a ~ C140b)  |  ©2007 Kumon Institute of Education KIE KR",
+  "pdfFile": "kumon-english-C-131-140.pdf",
+  "pageList": [
+    "C 131a",
+    "C 131b",
+    "C 132a",
+    "C 132b",
+    "C 133a",
+    "C 133b",
+    "C 134a",
+    "C 134b",
+    "C 135a",
+    "C 135b",
+    "C 136a",
+    "C 136b",
+    "C 137a",
+    "C 137b",
+    "C 138a",
+    "C 138b",
+    "C 139a",
+    "C 139b",
+    "C 140a",
+    "C 140b"
+  ],
+  "totalPages": 20,
+  "sheets": {
+    "s1": {
+      "name": "📄 페이지별 원문",
+      "headers": [
+        "페이지ID",
+        "학습주제",
+        "지문/예문",
+        "문제 원문",
+        "정답",
+        "풀이 과정",
+        "단계별 힌트",
+        "힌트/보기",
+        "문제유형",
+        "이미지 설명"
+      ],
+      "data": [
+        {
+          "페이지ID": "C 131a",
+          "학습주제": "감탄문 — What (명사 강조)\nWhat a small cabbage this is!",
+          "지문/예문": "What a small cabbage this is!\nWhat big tomatoes these are!\n\n이것은 정말 작은 양배추다!\n이것들은 정말 큰 토마토들이다!",
+          "문제 원문": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ What a small cabbage this is! (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (이것들은 정말 큰 토마토들이다!)\n   What ___ ___ ___ ___!",
+          "정답": "[II] 1) What big tomatoes these are!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ What a small cabbage this is! (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (이것들은 정말 큰 토마토들이다!)\n   What ___ ___ ___ ___!",
+          "이미지 설명": "아이가 작은 양배추 들고, 다른 아이가 큰 토마토 드는 그림"
+        },
+        {
+          "페이지ID": "C 131b",
+          "학습주제": "감탄문 — What (명사 강조) 변환 연습",
+          "지문/예문": "(131a 내용 복습)",
+          "문제 원문": "[III] 다음 그림을 보고, 감탄문으로 바꿔 쓰시오.\n1) This is a small cabbage.\n   → (이것은 정말 작은 양배추다!)\n2) These are big tomatoes.\n   → (이것들은 정말 큰 토마토들이다!)\n3) That is a cute dog.\n   → (저것은 정말 귀여운 강아지다!)\n4) Those are beautiful flowers.\n   → (저것들은 정말 아름다운 꽃들이다!)",
+          "정답": "1) What a small cabbage this is!\n2) What big tomatoes these are!\n3) What a cute dog that is!\n4) What beautiful flowers those are!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[III] 다음 그림을 보고, 감탄문으로 바꿔 쓰시오.\n1) This is a small cabbage.\n   → (이것은 정말 작은 양배추다!)\n2) These are big tomatoes.\n   → (이것들은 정말 큰 토마토들이다!)\n3) That is a cute dog.\n   → (저것은 정말 귀여운 강아지다!)\n4) Those are beautiful flowers.\n   → (저것들은 정말 아름다운 꽃들이다!)",
+          "이미지 설명": "양배추 든 아이 / 토마토 든 아이 / 강아지 산책 / 꽃집 그림"
+        },
+        {
+          "페이지ID": "C 132a",
+          "학습주제": "감탄문 — What (명사 강조, 주어+동사 변형)\nWhat strong arms he has!",
+          "지문/예문": "What strong arms he has!\nWhat a fast ball he throws!\n\n그는 정말 튼튼한 팔을 가지고 있다!\n그는 정말 빠른 공을 던진다!",
+          "문제 원문": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ What strong arms he has! (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (그는 정말 빠른 공을 던진다!)\n   What a ___ ___ ___ ___!",
+          "정답": "[II] 1) What a fast ball he throws!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ What strong arms he has! (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (그는 정말 빠른 공을 던진다!)\n   What a ___ ___ ___ ___!",
+          "이미지 설명": "야구 선수가 공 던지는 그림"
+        },
+        {
+          "페이지ID": "C 132b",
+          "학습주제": "감탄문 — What 변환 연습 (has/throws/lives)",
+          "지문/예문": "(132a 내용 복습)",
+          "문제 원문": "[III] 다음 그림을 보고, 감탄문으로 바꿔 쓰시오.\n1) He has strong arms.\n   → (그는 정말 튼튼한 팔을 가지고 있다!)\n2) He throws a fast ball.\n   → (그는 정말 빠른 공을 던진다!)\n3) Sara has nice hats.\n   → (Sara는 정말 멋진 모자들을 가지고 있다!)\n4) She lives in a big house.\n   → (그녀는 정말 큰 집에 살고 있다!)",
+          "정답": "1) What strong arms he has!\n2) What a fast ball he throws!\n3) What nice hats Sara has!\n4) What a big house she lives in!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[III] 다음 그림을 보고, 감탄문으로 바꿔 쓰시오.\n1) He has strong arms.\n   → (그는 정말 튼튼한 팔을 가지고 있다!)\n2) He throws a fast ball.\n   → (그는 정말 빠른 공을 던진다!)\n3) Sara has nice hats.\n   → (Sara는 정말 멋진 모자들을 가지고 있다!)\n4) She lives in a big house.\n   → (그녀는 정말 큰 집에 살고 있다!)",
+          "이미지 설명": "팔 자랑 선수 / 투구 선수 / 모자 든 Sara / 큰 집 그림"
+        },
+        {
+          "페이지ID": "C 133a",
+          "학습주제": "감탄문 — How (형용사 강조)\nHow sour this orange is!",
+          "지문/예문": "How sour this orange is!\nHow sweet these grapes are!\n\n이 오렌지는 정말 시다!\n이 포도는 정말 달다!",
+          "문제 원문": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How sour this orange is! (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (이 포도는 정말 달다!)\n   How ___ ___ ___ ___!",
+          "정답": "[II] 1) How sweet these grapes are!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How sour this orange is! (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (이 포도는 정말 달다!)\n   How ___ ___ ___ ___!",
+          "이미지 설명": "오렌지 먹는 여자, 포도 먹는 여자 그림"
+        },
+        {
+          "페이지ID": "C 133b",
+          "학습주제": "감탄문 — How (형용사 강조) 변환 연습",
+          "지문/예문": "(133a 내용 복습)",
+          "문제 원문": "[III] 다음 그림을 보고, 감탄문으로 바꿔 쓰시오.\n1) This orange is sour.\n   → (이 오렌지는 정말 시다!)\n2) These grapes are sweet.\n   → (이 포도는 정말 달다!)\n3) This soup is spicy.\n   → (이 수프는 정말 맵다!)\n4) These carrots are long.\n   → (이 당근들은 정말 길다!)",
+          "정답": "1) How sour this orange is!\n2) How sweet these grapes are!\n3) How spicy this soup is!\n4) How long these carrots are!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[III] 다음 그림을 보고, 감탄문으로 바꿔 쓰시오.\n1) This orange is sour.\n   → (이 오렌지는 정말 시다!)\n2) These grapes are sweet.\n   → (이 포도는 정말 달다!)\n3) This soup is spicy.\n   → (이 수프는 정말 맵다!)\n4) These carrots are long.\n   → (이 당근들은 정말 길다!)",
+          "이미지 설명": "오렌지 / 포도 / 매운 수프 / 긴 당근 그림"
+        },
+        {
+          "페이지ID": "C 134a",
+          "학습주제": "감탄문 — How (부사 강조)\nHow high she jumps!",
+          "지문/예문": "How high she jumps!\nHow fast she runs!\n\n그녀는 정말 높이 뛴다!\n그녀는 정말 빨리 달린다!",
+          "문제 원문": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How high she jumps! (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (그녀는 정말 빨리 달린다!)\n   How ___ ___ ___!",
+          "정답": "[II] 1) How fast she runs!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How high she jumps! (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (그녀는 정말 빨리 달린다!)\n   How ___ ___ ___!",
+          "이미지 설명": "높이뛰기 / 달리기 여자 선수 그림"
+        },
+        {
+          "페이지ID": "C 134b",
+          "학습주제": "감탄문 — How (부사 강조) 변환 연습",
+          "지문/예문": "(134a 내용 복습)",
+          "문제 원문": "[III] 다음 그림을 보고, 감탄문으로 바꿔 쓰시오.\n1) She jumps high.\n   → (그녀는 정말 높이 뛴다!)\n2) She runs fast.\n   → (그녀는 정말 빨리 달린다!)\n3) Sara studies hard.\n   → (Sara는 정말 열심히 공부한다!)\n4) He plays the piano well.\n   → (그는 피아노를 정말 잘 친다!)",
+          "정답": "1) How high she jumps!\n2) How fast she runs!\n3) How hard Sara studies!\n4) How well he plays the piano!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[III] 다음 그림을 보고, 감탄문으로 바꿔 쓰시오.\n1) She jumps high.\n   → (그녀는 정말 높이 뛴다!)\n2) She runs fast.\n   → (그녀는 정말 빨리 달린다!)\n3) Sara studies hard.\n   → (Sara는 정말 열심히 공부한다!)\n4) He plays the piano well.\n   → (그는 피아노를 정말 잘 친다!)",
+          "이미지 설명": "높이뛰기 / 달리기 / 도서관에서 공부 / 피아노 치는 그림"
+        },
+        {
+          "페이지ID": "C 135a",
+          "학습주제": "What vs How 감탄문 종합 정리",
+          "지문/예문": "What a small cabbage this is!\nWhat strong arms he has!\nHow sour this orange is!\nHow high she jumps!",
+          "문제 원문": "[I] 알맞은 말을 넣어 감탄문을 완성하시오.\n1) ___ sweet these grapes are!\n   (이 포도는 정말 달다!)\n2) ___ big tomatoes these are!\n   (이것들은 정말 큰 토마토들이다!)\n3) ___ a fast ball he throws!\n   (그는 정말 빠른 공을 던진다!)\n4) ___ fast she runs!\n   (그녀는 정말 빨리 달린다!)",
+          "정답": "1) How\n2) What\n3) What\n4) How",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[I] 알맞은 말을 넣어 감탄문을 완성하시오.\n1) ___ sweet these grapes are!\n   (이 포도는 정말 달다!)\n2) ___ big tomatoes these are!\n   (이것들은 정말 큰 토마토들이다!)\n3) ___ a fast ball he throws!\n   (그는 정말 빠른 공을 던진다!)\n4) ___ fast she runs!\n   (그녀는 정말 빨리 달린다!)",
+          "이미지 설명": "없음"
+        },
+        {
+          "페이지ID": "C 135b",
+          "학습주제": "What vs How — 단어 배열 완성",
+          "지문/예문": "(135a 내용 복습)",
+          "문제 원문": "[II] [ ]의 말을 사용하여 감탄문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ this / What / is / How / a small cabbage ]!\n   (이것은 정말 작은 양배추다!)\n2) [ he / How / has / strong arms / What ]!\n   (그는 정말 튼튼한 팔을 가지고 있다!)\n3) [ How / is / What / sour / this orange ]!\n   (이 오렌지는 정말 시다!)\n4) [ high / What / jumps / How / she ]!\n   (그녀는 정말 높이 뛴다!)",
+          "정답": "1) What a small cabbage this is! (How 미사용)\n2) What strong arms he has! (How 미사용)\n3) How sour this orange is! (What 미사용)\n4) How high she jumps! (What 미사용)",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[II] [ ]의 말을 사용하여 감탄문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ this / What / is / How / a small cabbage ]!\n   (이것은 정말 작은 양배추다!)\n2) [ he / How / has / strong arms / What ]!\n   (그는 정말 튼튼한 팔을 가지고 있다!)\n3) [ How / is / What / sour / this orange ]!\n   (이 오렌지는 정말 시다!)\n4) [ high / What / jumps / How / she ]!\n   (그녀는 정말 높이 뛴다!)",
+          "이미지 설명": "없음"
+        },
+        {
+          "페이지ID": "C 136a",
+          "학습주제": "What vs How — 빈칸 채우기 복습",
+          "지문/예문": "What big tomatoes these are!\nWhat a fast ball he throws!\nHow sweet these grapes are!\nHow fast she runs!",
+          "문제 원문": "[I] 알맞은 말을 넣어 감탄문을 완성하시오.\n1) ___ a small cabbage this is!\n   (이것은 정말 작은 양배추다!)\n2) ___ sour this orange is!\n   (이 오렌지는 정말 시다!)\n3) ___ strong arms he has!\n   (그는 정말 튼튼한 팔을 가지고 있다!)\n4) ___ high she jumps!\n   (그녀는 정말 높이 뛴다!)",
+          "정답": "1) What\n2) How\n3) What\n4) How",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[I] 알맞은 말을 넣어 감탄문을 완성하시오.\n1) ___ a small cabbage this is!\n   (이것은 정말 작은 양배추다!)\n2) ___ sour this orange is!\n   (이 오렌지는 정말 시다!)\n3) ___ strong arms he has!\n   (그는 정말 튼튼한 팔을 가지고 있다!)\n4) ___ high she jumps!\n   (그녀는 정말 높이 뛴다!)",
+          "이미지 설명": "없음"
+        },
+        {
+          "페이지ID": "C 136b",
+          "학습주제": "What vs How — 단어 배열 복습",
+          "지문/예문": "(136a 내용 복습)",
+          "문제 원문": "[II] [ ]의 말을 사용하여 감탄문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ What / these / big tomatoes / How / are ]!\n   (이것들은 정말 큰 토마토들이다!)\n2) [ he / a fast ball / How / throws / What ]!\n   (그는 정말 빠른 공을 던진다!)\n3) [ sweet / What / are / How / these grapes ]!\n   (이 포도는 정말 달다!)\n4) [ What / runs / fast / How / she ]!\n   (그녀는 정말 빨리 달린다!)",
+          "정답": "1) What big tomatoes these are! (How 미사용)\n2) What a fast ball he throws! (How 미사용)\n3) How sweet these grapes are! (What 미사용)\n4) How fast she runs! (What 미사용)",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[II] [ ]의 말을 사용하여 감탄문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ What / these / big tomatoes / How / are ]!\n   (이것들은 정말 큰 토마토들이다!)\n2) [ he / a fast ball / How / throws / What ]!\n   (그는 정말 빠른 공을 던진다!)\n3) [ sweet / What / are / How / these grapes ]!\n   (이 포도는 정말 달다!)\n4) [ What / runs / fast / How / she ]!\n   (그녀는 정말 빨리 달린다!)",
+          "이미지 설명": "없음"
+        },
+        {
+          "페이지ID": "C 137a",
+          "학습주제": "감탄문 — 구조 시각화 + 단어 배열",
+          "지문/예문": "What a small cabbage  this  is !\nWhat strong arms      he    has !\nHow sweet             these grapes  are !\nHow high              she   jumps !",
+          "문제 원문": "[I] [ ]의 말을 사용하여 감탄문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ is / How / What / that / a cute dog ]!\n   (저것은 정말 귀여운 강아지다!)\n2) [ nice hats / How / has / Sara / What ]!\n   (Sara는 정말 멋진 모자들을 가지고 있다!)\n3) [ How / these carrots / What / are / long ]!\n   (이 당근들은 정말 길다!)",
+          "정답": "1) What a cute dog that is! (How 미사용)\n2) What nice hats Sara has! (How 미사용)\n3) How long these carrots are! (What 미사용)",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[I] [ ]의 말을 사용하여 감탄문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ is / How / What / that / a cute dog ]!\n   (저것은 정말 귀여운 강아지다!)\n2) [ nice hats / How / has / Sara / What ]!\n   (Sara는 정말 멋진 모자들을 가지고 있다!)\n3) [ How / these carrots / What / are / long ]!\n   (이 당근들은 정말 길다!)",
+          "이미지 설명": "없음"
+        },
+        {
+          "페이지ID": "C 137b",
+          "학습주제": "감탄문 — 그림 보고 단어 골라 완성",
+          "지문/예문": "(137a 내용 복습)",
+          "문제 원문": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 감탄문을 완성하시오.\n□ long · nice hats · a cute dog\n\n1) (강아지 그림) → What ___ that is!\n2) (모자 그림) → What ___ Sara has!\n3) (당근 그림) → How ___ these carrots are!",
+          "정답": "1) What a cute dog that is!\n2) What nice hats Sara has!\n3) How long these carrots are!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 감탄문을 완성하시오.\n□ long · nice hats · a cute dog\n\n1) (강아지 그림) → What ___ that is!\n2) (모자 그림) → What ___ Sara has!\n3) (당근 그림) → How ___ these carrots are!",
+          "이미지 설명": "강아지 산책 / Sara와 모자들 / 큰 당근 든 아이 그림"
+        },
+        {
+          "페이지ID": "C 138a",
+          "학습주제": "감탄문 — 대화문 (A·B·C) 완성",
+          "지문/예문": "A: What a small cabbage this is!\nB: What big tomatoes these are!\nC: They all taste good.\n\nA: 이것은 정말 작은 양배추야!\nB: 이것들은 정말 큰 토마토들이야!\nC: 그것들은 모두 맛이 좋단다.",
+          "문제 원문": "[I] 다음 그림을 보고, 감탄문을 완성하시오.\n1) (야구 선수, has/throws 힌트)\n   A: What ___ strong arms ___ ___!\n      What a fast ___ ___ ___!\n   B: He is a good player.",
+          "정답": "A: What strong arms he has!\n   What a fast ball he throws!\nB: He is a good player.",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[I] 다음 그림을 보고, 감탄문을 완성하시오.\n1) (야구 선수, has/throws 힌트)\n   A: What ___ strong arms ___ ___!\n      What a fast ___ ___ ___!\n   B: He is a good player.",
+          "이미지 설명": "야구 투수 그림 / 농부와 아이들 양배추·토마토 그림"
+        },
+        {
+          "페이지ID": "C 138b",
+          "학습주제": "감탄문 — 대화문 그림 보고 단어 골라 완성",
+          "지문/예문": "(138a 내용 복습)",
+          "문제 원문": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 감탄문을 완성하시오.\n□ a fast ball · big tomatoes · strong arms · a small cabbage\n\n1) (농부+아이들, 양배추·토마토)\n   A: What ___ this is! / B: What ___ these are!\n   C: They all taste good.\n\n2) (야구 선수, has/throws)\n   A: What ___ he ___ / What ___ he ___\n   B: He is a good player.",
+          "정답": "1) A: What a small cabbage this is!\n   B: What big tomatoes these are!\n2) A: What strong arms he has!\n      What a fast ball he throws!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 감탄문을 완성하시오.\n□ a fast ball · big tomatoes · strong arms · a small cabbage\n\n1) (농부+아이들, 양배추·토마토)\n   A: What ___ this is! / B: What ___ these are!\n   C: They all taste good.\n\n2) (야구 선수, has/throws)\n   A: What ___ he ___ / What ___ he ___\n   B: He is a good player.",
+          "이미지 설명": "농부+아이들 그림 / 야구 투수 그림"
+        },
+        {
+          "페이지ID": "C 139a",
+          "학습주제": "감탄문 — 대화문 (A·B) How 완성",
+          "지문/예문": "A: How sour this orange is!\nB: How sweet these grapes are!\n   Let's buy some grapes.\n\nA: 이 오렌지는 정말 셔요!\nB: 이 포도는 정말 달아요!\n   포도를 조금 삽시다.",
+          "문제 원문": "[I] 다음 그림을 보고, 감탄문을 완성하시오.\n1) (높이뛰기+달리기 선수, jumps/runs 힌트)\n   A: How ___ high ___ ___!\n      How ___ fast ___ ___!\n   B: She is a great athlete.",
+          "정답": "A: How high she jumps!\n   How fast she runs!\nB: She is a great athlete.",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[I] 다음 그림을 보고, 감탄문을 완성하시오.\n1) (높이뛰기+달리기 선수, jumps/runs 힌트)\n   A: How ___ high ___ ___!\n      How ___ fast ___ ___!\n   B: She is a great athlete.",
+          "이미지 설명": "오렌지·포도 먹는 그림 / 높이뛰기·달리기 선수 그림"
+        },
+        {
+          "페이지ID": "C 139b",
+          "학습주제": "감탄문 — 대화문 그림 보고 단어 골라 완성",
+          "지문/예문": "(139a 내용 복습)",
+          "문제 원문": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 감탄문을 완성하시오.\n□ sweet · high · fast · sour\n\n1) (오렌지·포도 그림)\n   A: How ___ this orange is!\n   B: How ___ these grapes are!\n   Let's buy some grapes.\n\n2) (높이뛰기+달리기 선수, jumps/runs)\n   A: How ___ she ___!\n      How ___ she ___!\n   B: She is a great athlete.",
+          "정답": "1) A: How sour this orange is!\n   B: How sweet these grapes are!\n2) A: How high she jumps!\n      How fast she runs!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 감탄문을 완성하시오.\n□ sweet · high · fast · sour\n\n1) (오렌지·포도 그림)\n   A: How ___ this orange is!\n   B: How ___ these grapes are!\n   Let's buy some grapes.\n\n2) (높이뛰기+달리기 선수, jumps/runs)\n   A: How ___ she ___!\n      How ___ she ___!\n   B: She is a great athlete.",
+          "이미지 설명": "오렌지·포도 그림 / 여자 선수 그림"
+        },
+        {
+          "페이지ID": "C 140a",
+          "학습주제": "감탄문 — 대화문 (자동차 전시회)\nWhat a short bus it is!",
+          "지문/예문": "A: Wow!\n   What a short bus it is!\nB: Roy, look at that car.\nA: How long it is!\n   What an exciting auto show it is!\n\nA: 와! 정말 짧은 버스예요!\nB: Roy, 저 차를 봐.\nA: 정말 길어요! 정말 재미있는 자동차 전시회예요!",
+          "문제 원문": "[I] 다음 그림을 보고, 감탄문을 완성하시오.\n1) (긴 리무진 그림)\n   How ___ long ___ it ___ is ___!\n2) (자동차 전시회 그림)\n   What ___ an ___ exciting ___ auto show ___ it ___ is ___!",
+          "정답": "1) How long it is!\n2) What an exciting auto show it is!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[I] 다음 그림을 보고, 감탄문을 완성하시오.\n1) (긴 리무진 그림)\n   How ___ long ___ it ___ is ___!\n2) (자동차 전시회 그림)\n   What ___ an ___ exciting ___ auto show ___ it ___ is ___!",
+          "이미지 설명": "짧은 버스 / 긴 리무진 / 자동차 전시회 그림"
+        },
+        {
+          "페이지ID": "C 140b",
+          "학습주제": "감탄문 총정리 — What/How 모든 유형",
+          "지문/예문": "What a small cabbage this is!\nWhat strong arms he has!\nHow sour this orange is!\nHow high she jumps!",
+          "문제 원문": "[II] 다음 그림을 보고, 감탄문을 완성하시오.\n① (짧은 버스) Wow!\n   What ___ short ___ bus ___ it ___ is!\n② (긴 리무진) Roy, look at that car.\n   How ___ long ___ it ___ is!\n③ (자동차 전시회)\n   What ___ an exciting ___ auto show ___ it ___ is!",
+          "정답": "① What a short bus it is!\n② How long it is!\n③ What an exciting auto show it is!",
+          "풀이 과정": "",
+          "단계별 힌트": "",
+          "힌트/보기": "",
+          "문제유형": "[II] 다음 그림을 보고, 감탄문을 완성하시오.\n① (짧은 버스) Wow!\n   What ___ short ___ bus ___ it ___ is!\n② (긴 리무진) Roy, look at that car.\n   How ___ long ___ it ___ is!\n③ (자동차 전시회)\n   What ___ an exciting ___ auto show ___ it ___ is!",
+          "이미지 설명": "짧은 버스 / 긴 리무진 / 자동차 전시회 그림 3장\n[복습 박스] What~! / How~! 예문 정리"
+        }
+      ]
+    },
+    "s2": {
+      "name": "📚 핵심 개념 사전",
+      "headers": [
+        "No",
+        "문법 유형",
+        "구조·설명",
+        "예문(영어)",
+        "뜻(한국어)",
+        "지도 포인트",
+        "관련 페이지"
+      ],
+      "data": [
+        {
+          "No": "1",
+          "문법 유형": "What 감탄문\n(단수 명사 강조)",
+          "구조·설명": "What + a + 형용사 + 명사 + 주어 + 동사!",
+          "예문(영어)": "What a small cabbage this is!\nWhat a cute dog that is!\nWhat a fast ball he throws!\nWhat a short bus it is!\nWhat an exciting auto show it is!",
+          "뜻(한국어)": "이것은 정말 작은 양배추다!\n저것은 정말 귀여운 강아지다!\n그는 정말 빠른 공을 던진다!\n정말 짧은 버스예요!\n정말 재미있는 자동차 전시회예요!",
+          "지도 포인트": "C131~140",
+          "관련 페이지": ""
+        },
+        {
+          "No": "2",
+          "문법 유형": "What 감탄문\n(복수 명사 강조)",
+          "구조·설명": "What + 형용사 + 명사(복수) + 주어 + 동사!",
+          "예문(영어)": "What big tomatoes these are!\nWhat strong arms he has!\nWhat nice hats Sara has!\nWhat beautiful flowers those are!",
+          "뜻(한국어)": "이것들은 정말 큰 토마토들이다!\n그는 정말 튼튼한 팔을 가지고 있다!\nSara는 정말 멋진 모자들을 가지고 있다!\n저것들은 정말 아름다운 꽃들이다!",
+          "지도 포인트": "C131~140",
+          "관련 페이지": ""
+        },
+        {
+          "No": "3",
+          "문법 유형": "How 감탄문\n(형용사 강조)",
+          "구조·설명": "How + 형용사 + 주어 + 동사!",
+          "예문(영어)": "How sour this orange is!\nHow sweet these grapes are!\nHow spicy this soup is!\nHow long these carrots are!\nHow long it is!",
+          "뜻(한국어)": "이 오렌지는 정말 시다!\n이 포도는 정말 달다!\n이 수프는 정말 맵다!\n이 당근들은 정말 길다!\n정말 길어요!",
+          "지도 포인트": "C133~140",
+          "관련 페이지": ""
+        },
+        {
+          "No": "4",
+          "문법 유형": "How 감탄문\n(부사 강조)",
+          "구조·설명": "How + 부사 + 주어 + 동사!",
+          "예문(영어)": "How high she jumps!\nHow fast she runs!\nHow hard Sara studies!\nHow well he plays the piano!",
+          "뜻(한국어)": "그녀는 정말 높이 뛴다!\n그녀는 정말 빨리 달린다!\nSara는 정말 열심히 공부한다!\n그는 피아노를 정말 잘 친다!",
+          "지도 포인트": "C134~140",
+          "관련 페이지": ""
+        },
+        {
+          "No": "5",
+          "문법 유형": "What vs How\n선택 기준",
+          "구조·설명": "명사 강조 → What\n형용사/부사 강조 → How",
+          "예문(영어)": "What a big house she lives in!\nHow big the house is!\n(같은 의미를 다른 방식으로 표현 가능)",
+          "뜻(한국어)": "그녀는 정말 큰 집에 살고 있다!\n그 집은 정말 크다!",
+          "지도 포인트": "C135~136",
+          "관련 페이지": ""
+        }
+      ]
+    },
+    "s3": {
+      "name": "📝 페이지별 요점정리",
+      "headers": [
+        "페이지",
+        "학습주제",
+        "핵심 포인트",
+        "정답 모음",
+        "지도 메모",
+        "특이사항"
+      ],
+      "data": [
+        {
+          "페이지": "1",
+          "학습주제": "cabbage",
+          "핵심 포인트": "[kǽbidʒ]",
+          "정답 모음": "명 양배추",
+          "지도 메모": "C131",
+          "특이사항": ""
+        },
+        {
+          "페이지": "2",
+          "학습주제": "tomato",
+          "핵심 포인트": "[təméitou]",
+          "정답 모음": "명 토마토",
+          "지도 메모": "C131",
+          "특이사항": ""
+        },
+        {
+          "페이지": "3",
+          "학습주제": "arm",
+          "핵심 포인트": "[ɑːrm]",
+          "정답 모음": "명 팔",
+          "지도 메모": "C132",
+          "특이사항": ""
+        },
+        {
+          "페이지": "4",
+          "학습주제": "throw",
+          "핵심 포인트": "[θrou]",
+          "정답 모음": "동 던지다",
+          "지도 메모": "C132",
+          "특이사항": ""
+        },
+        {
+          "페이지": "5",
+          "학습주제": "sour",
+          "핵심 포인트": "[sáuər]",
+          "정답 모음": "형 신",
+          "지도 메모": "C133",
+          "특이사항": ""
+        },
+        {
+          "페이지": "6",
+          "학습주제": "sweet",
+          "핵심 포인트": "[swiːt]",
+          "정답 모음": "형 달콤한",
+          "지도 메모": "C133",
+          "특이사항": ""
+        },
+        {
+          "페이지": "7",
+          "학습주제": "spicy",
+          "핵심 포인트": "[spáisi]",
+          "정답 모음": "형 매운",
+          "지도 메모": "C133",
+          "특이사항": ""
+        },
+        {
+          "페이지": "8",
+          "학습주제": "carrot",
+          "핵심 포인트": "[kǽrət]",
+          "정답 모음": "명 당근",
+          "지도 메모": "C133",
+          "특이사항": ""
+        },
+        {
+          "페이지": "9",
+          "학습주제": "high",
+          "핵심 포인트": "[hai]",
+          "정답 모음": "부 높이 / 형 높은",
+          "지도 메모": "C134",
+          "특이사항": ""
+        },
+        {
+          "페이지": "10",
+          "학습주제": "fast",
+          "핵심 포인트": "[fæst]",
+          "정답 모음": "부 빨리 / 형 빠른",
+          "지도 메모": "C134",
+          "특이사항": ""
+        },
+        {
+          "페이지": "11",
+          "학습주제": "hard",
+          "핵심 포인트": "[hɑːrd]",
+          "정답 모음": "부 열심히",
+          "지도 메모": "C134",
+          "특이사항": ""
+        },
+        {
+          "페이지": "12",
+          "학습주제": "well",
+          "핵심 포인트": "[wel]",
+          "정답 모음": "부 잘",
+          "지도 메모": "C134",
+          "특이사항": ""
+        },
+        {
+          "페이지": "13",
+          "학습주제": "cute",
+          "핵심 포인트": "[kjuːt]",
+          "정답 모음": "형 귀여운",
+          "지도 메모": "C137",
+          "특이사항": ""
+        },
+        {
+          "페이지": "14",
+          "학습주제": "nice",
+          "핵심 포인트": "[nais]",
+          "정답 모음": "형 멋진, 좋은",
+          "지도 메모": "C137",
+          "특이사항": ""
+        },
+        {
+          "페이지": "15",
+          "학습주제": "long",
+          "핵심 포인트": "[lɔːŋ]",
+          "정답 모음": "형/부 긴, 길게",
+          "지도 메모": "C137",
+          "특이사항": ""
+        },
+        {
+          "페이지": "16",
+          "학습주제": "exciting",
+          "핵심 포인트": "[iksáitiŋ]",
+          "정답 모음": "형 두근거리게 하는, 재미있는",
+          "지도 메모": "C140",
+          "특이사항": ""
+        },
+        {
+          "페이지": "17",
+          "학습주제": "auto",
+          "핵심 포인트": "[ɔːtou]",
+          "정답 모음": "명 자동차",
+          "지도 메모": "C140",
+          "특이사항": ""
+        },
+        {
+          "페이지": "18",
+          "학습주제": "show",
+          "핵심 포인트": "[ʃou]",
+          "정답 모음": "명 전시회",
+          "지도 메모": "C140",
+          "특이사항": ""
+        },
+        {
+          "페이지": "19",
+          "학습주제": "short",
+          "핵심 포인트": "[ʃɔːrt]",
+          "정답 모음": "형 짧은",
+          "지도 메모": "C140",
+          "특이사항": ""
+        },
+        {
+          "페이지": "20",
+          "학습주제": "athlete",
+          "핵심 포인트": "[ǽθliːt]",
+          "정답 모음": "명 운동선수",
+          "지도 메모": "C139",
+          "특이사항": ""
+        }
+      ]
+    },
+    "s4": {
+      "name": "⚡ 단원 전체 요약",
+      "headers": [
+        "주제",
+        "핵심 내용",
+        "핵심 정답/예문"
+      ],
+      "data": [
+        {
+          "주제": "(단원 요약 내용을 입력하세요)",
+          "핵심 내용": "단원: 감탄문 (What a small cabbage this is!)  |  총 20페이지 (C131a ~ C140b)  |  ©2007 Kumon Institute of Education KIE KR",
+          "핵심 정답/예문": ""
+        }
+      ]
+    }
+  }
+}
