@@ -3,10 +3,10 @@
   "subject": "english",
   "subjectKo": "영어",
   "emoji": "🔤",
-  "color": "#4A0E8F",
+  "color": "#9C27B0",
   "stage": "C",
   "pages": "121-130",
-  "title": "단원: How ~? 문장 (How is the weather in Oklahoma?)  |  총 20페이지 (C121a ~ C130b)  |  ©2007 Kumon Institute of Education KIE KR",
+  "title": "🔤 단원: How ~? 문장 (How is the weather in Oklahoma?)  |  총 20페이지 (C121a ~ C130b)  |  ©2007 Kumon Institute of Education KIE KR",
   "pdfFile": "kumon-english-C-121-130.pdf",
   "pageList": [
     "C 121a",
@@ -53,9 +53,9 @@
           "지문/예문": "How is the weather in Oklahoma?\nIt is fine.\n\n오클라호마의 날씨는 어때?\n맑아.",
           "문제 원문": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How is the weather in Oklahoma? (덧쓰기)\n→ It is fine. (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (오클라호마의 날씨는 어때?)\n   How ___ ___ ___ ___?",
           "정답": "[II] 1) How is the weather in Oklahoma?",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n[II] 1) How is the weather in Oklahoma?",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How is the weather in Oklahoma? (덧쓰기)\n→ It is fine. (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (오클라호마의 날씨는 어때?)\n   How ___ ___ ___ ___?",
           "이미지 설명": "두 여자 아이가 날씨 이야기, 창문에 맑은 풍경 그림"
         },
@@ -65,9 +65,9 @@
           "지문/예문": "(121a 내용 복습)",
           "문제 원문": "[III] 다음 그림을 보고, 영문을 완성하시오.\n1) the weather in Oklahoma / fine\n   (오클라호마의 날씨는 어때?)\n   How ___ ___ ___ ___?\n   It ___ ___.\n2) the party yesterday / fun\n   (어제 파티는 어땠니?)\n   How ___ ___ ___ ___?\n   It ___ ___.",
           "정답": "1) How is the weather in Oklahoma?\n   It is fine.\n2) How was the party yesterday?\n   It was fun.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) How is the weather in Oklahoma?\n   It is fine.\n2) How was the party yesterday?\n   It was fun.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[III] 다음 그림을 보고, 영문을 완성하시오.\n1) the weather in Oklahoma / fine\n   (오클라호마의 날씨는 어때?)\n   How ___ ___ ___ ___?\n   It ___ ___.\n2) the party yesterday / fun\n   (어제 파티는 어땠니?)\n   How ___ ___ ___ ___?\n   It ___ ___.",
           "이미지 설명": "날씨 묻는 두 아이 / 파티 케이크 그림"
         },
@@ -77,9 +77,9 @@
           "지문/예문": "How old is your brother?\nHe is nine years old.\n\n너의 남동생은 몇 살이니?\n그는 아홉 살이야.",
           "문제 원문": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How old is your brother? (덧쓰기)\n→ He is nine years old. (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (너의 남동생은 몇 살이니?)\n   How ___ ___ ___?",
           "정답": "[II] 1) How old is your brother?",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n[II] 1) How old is your brother?",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How old is your brother? (덧쓰기)\n→ He is nine years old. (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (너의 남동생은 몇 살이니?)\n   How ___ ___ ___?",
           "이미지 설명": "아이들이 놀고 있는 방, 숫자 9 표시 그림"
         },
@@ -89,9 +89,9 @@
           "지문/예문": "(122a 내용 복습)",
           "문제 원문": "[III] 다음 그림을 보고, 영문을 완성하시오.\n1) nine years old\n   (너의 남동생은 몇 살이니?)\n   How ___ ___ ___?\n   He ___ ___ ___ ___.\n2) five years old\n   (너는 몇 살이니?)\n   How ___ ___?\n   I ___ ___ ___ ___.",
           "정답": "1) How old is your brother?\n   He is nine years old.\n2) How old are you?\n   I am five years old.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) How old is your brother?\n   He is nine years old.\n2) How old are you?\n   I am five years old.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[III] 다음 그림을 보고, 영문을 완성하시오.\n1) nine years old\n   (너의 남동생은 몇 살이니?)\n   How ___ ___ ___?\n   He ___ ___ ___ ___.\n2) five years old\n   (너는 몇 살이니?)\n   How ___ ___?\n   I ___ ___ ___ ___.",
           "이미지 설명": "남동생과 노는 아이 / 어른이 5살 아이에게 묻는 그림"
         },
@@ -101,9 +101,9 @@
           "지문/예문": "How many hats do you have?\nI have seven hats.\n\n당신은 모자를 몇 개 가지고 있어요?\n나는 모자를 일곱 개 가지고 있어.",
           "문제 원문": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How many hats do you have? (덧쓰기)\n→ I have seven hats. (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (당신은 모자를 몇 개 가지고 있어요?)\n   How ___ ___ ___?",
           "정답": "[II] 1) How many hats do you have?",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n[II] 1) How many hats do you have?",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How many hats do you have? (덧쓰기)\n→ I have seven hats. (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (당신은 모자를 몇 개 가지고 있어요?)\n   How ___ ___ ___?",
           "이미지 설명": "아이가 모자 걸이 앞에서 모자 세는 그림 (숫자 7)"
         },
@@ -113,9 +113,9 @@
           "지문/예문": "(123a 내용 복습)",
           "문제 원문": "[III] 다음 그림을 보고, 영문을 완성하시오.\n1) hats / seven hats\n   (당신은 모자를 몇 개 가지고 있어요?)\n   How ___ ___ ___ ___?\n   I ___ ___ ___.\n2) bags / six bags\n   (그녀는 가방을 몇 개 가지고 있니?)\n   How ___ ___ ___ ___?\n   She ___ ___ ___.",
           "정답": "1) How many hats do you have?\n   I have seven hats.\n2) How many bags does she have?\n   She has six bags.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) How many hats do you have?\n   I have seven hats.\n2) How many bags does she have?\n   She has six bags.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[III] 다음 그림을 보고, 영문을 완성하시오.\n1) hats / seven hats\n   (당신은 모자를 몇 개 가지고 있어요?)\n   How ___ ___ ___ ___?\n   I ___ ___ ___.\n2) bags / six bags\n   (그녀는 가방을 몇 개 가지고 있니?)\n   How ___ ___ ___ ___?\n   She ___ ___ ___.",
           "이미지 설명": "모자 있는 아이 / 가방 여섯 개 든 여자 그림"
         },
@@ -125,9 +125,9 @@
           "지문/예문": "How often do you watch TV?\nI watch it once a week.\n\n당신은 얼마나 자주 텔레비전을 봅니까?\n나는 일주일에 한 번 봅니다.",
           "문제 원문": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How often do you watch TV? (덧쓰기)\n→ I watch it once a week. (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (당신은 얼마나 자주 텔레비전을 봅니까?)\n   How ___ ___ ___?",
           "정답": "[II] 1) How often do you watch TV?",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n[II] 1) How often do you watch TV?",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[I] 다음 글을 읽고, 영어를 덧쓰시오.\n→ How often do you watch TV? (덧쓰기)\n→ I watch it once a week. (덧쓰기)\n\n[II] 윗글을 참고하여, 그림을 보고 영문을 완성하시오.\n1) (당신은 얼마나 자주 텔레비전을 봅니까?)\n   How ___ ___ ___?",
           "이미지 설명": "두 남자가 TV 이야기 나누는 그림"
         },
@@ -137,9 +137,9 @@
           "지문/예문": "(124a 내용 복습)",
           "문제 원문": "[III] 다음 그림을 보고, 영문을 완성하시오.\n1) TV / once a week\n   (당신은 얼마나 자주 텔레비전을 봅니까?)\n   How ___ ___ ___?\n   I ___ ___ ___ ___.\n2) travel abroad / once a year\n   (그녀는 얼마나 자주 해외 여행을 다니니?)\n   How ___ ___ ___?\n   She ___ ___ ___ ___.",
           "정답": "1) How often do you watch TV?\n   I watch it once a week.\n2) How often does she travel abroad?\n   She travels abroad once a year.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) How often do you watch TV?\n   I watch it once a week.\n2) How often does she travel abroad?\n   She travels abroad once a year.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[III] 다음 그림을 보고, 영문을 완성하시오.\n1) TV / once a week\n   (당신은 얼마나 자주 텔레비전을 봅니까?)\n   How ___ ___ ___?\n   I ___ ___ ___ ___.\n2) travel abroad / once a year\n   (그녀는 얼마나 자주 해외 여행을 다니니?)\n   How ___ ___ ___?\n   She ___ ___ ___ ___.",
           "이미지 설명": "TV 보는 남자 / 여행 가방 든 여자와 비행기 그림"
         },
@@ -149,9 +149,9 @@
           "지문/예문": "How is the weather in Oklahoma?\nIt is fine.\nHow old is your brother?\nHe is nine years old.",
           "문제 원문": "[I] 알맞은 말을 넣어 영문을 완성하시오.\n1) ___ was the weather in Seoul?\n   (서울의 날씨는 어땠니?)\n   It was ___.\n   (맑았어.)\n2) ___ ___ is she?\n   (그녀는 몇 살이니?)\n   She is ___ ___ ___ ___.\n   (그녀는 아홉 살이야.)",
           "정답": "1) How; fine.\n2) How old; nine years old.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) How; fine.\n2) How old; nine years old.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[I] 알맞은 말을 넣어 영문을 완성하시오.\n1) ___ was the weather in Seoul?\n   (서울의 날씨는 어땠니?)\n   It was ___.\n   (맑았어.)\n2) ___ ___ is she?\n   (그녀는 몇 살이니?)\n   She is ___ ___ ___ ___.\n   (그녀는 아홉 살이야.)",
           "이미지 설명": "없음"
         },
@@ -161,9 +161,9 @@
           "지문/예문": "(125a 내용 복습)",
           "문제 원문": "[II] [ ]의 말을 사용하여 영문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ the weather / is / does / How / in Oklahoma ]?\n   (오클라호마의 날씨는 어때?)\n2) [ fine / is / does / It ].\n3) [ does / is / How old / your brother ]?\n   (너의 남동생은 몇 살이니?)\n4) [ nine years old / He / is / does ].\n   (그는 아홉 살이야.)",
           "정답": "1) How is the weather in Oklahoma? (does 미사용)\n2) It is fine. (does 미사용)\n3) How old is your brother? (does 미사용)\n4) He is nine years old. (does 미사용)",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) How is the weather in Oklahoma? (does 미사용)\n2) It is fine. (does 미사용)\n3) How old is your brother? (does 미사용)\n4) He is nine years old. (does 미사용)",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[II] [ ]의 말을 사용하여 영문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ the weather / is / does / How / in Oklahoma ]?\n   (오클라호마의 날씨는 어때?)\n2) [ fine / is / does / It ].\n3) [ does / is / How old / your brother ]?\n   (너의 남동생은 몇 살이니?)\n4) [ nine years old / He / is / does ].\n   (그는 아홉 살이야.)",
           "이미지 설명": "없음 (단어 블록 배열 문제)"
         },
@@ -173,9 +173,9 @@
           "지문/예문": "How many hats do you have?\nI have seven hats.\nHow often do you watch TV?\nI watch it once a week.",
           "문제 원문": "[I] 알맞은 말을 넣어 영문을 완성하시오.\n1) ___ ___ hats does she have?\n   (그녀는 모자를 몇 개 가지고 있니?)\n   She has ___ ___.\n   (그녀는 모자를 일곱 개 가지고 있어.)\n2) ___ ___ do they play tennis?\n   (그들은 얼마나 자주 테니스를 치니?)\n   They play it ___ __ ___.\n   (그들은 일주일에 한 번 쳐.)",
           "정답": "1) How many; seven hats.\n2) How often; once a week.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) How many; seven hats.\n2) How often; once a week.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[I] 알맞은 말을 넣어 영문을 완성하시오.\n1) ___ ___ hats does she have?\n   (그녀는 모자를 몇 개 가지고 있니?)\n   She has ___ ___.\n   (그녀는 모자를 일곱 개 가지고 있어.)\n2) ___ ___ do they play tennis?\n   (그들은 얼마나 자주 테니스를 치니?)\n   They play it ___ __ ___.\n   (그들은 일주일에 한 번 쳐.)",
           "이미지 설명": "없음"
         },
@@ -185,9 +185,9 @@
           "지문/예문": "(126a 내용 복습)",
           "문제 원문": "[II] [ ]의 말을 사용하여 영문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ are / do / How many / have / hats / you ]?\n   (너는 모자를 몇 개 가지고 있니?)\n2) [ am / have / seven hats / I ].\n   (나는 모자를 일곱 개 가지고 있어.)\n3) [ you / watch / are / do / How often / TV ]?\n   (너는 얼마나 자주 텔레비전을 보니?)\n4) [ watch / am / it / I / once a week ].\n   (나는 일주일에 한 번 봐.)",
           "정답": "1) How many hats do you have? (are 미사용)\n2) I have seven hats. (am 미사용)\n3) How often do you watch TV? (are 미사용)\n4) I watch it once a week. (am 미사용)",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) How many hats do you have? (are 미사용)\n2) I have seven hats. (am 미사용)\n3) How often do you watch TV? (are 미사용)\n4) I watch it once a week. (am 미사용)",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[II] [ ]의 말을 사용하여 영문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ are / do / How many / have / hats / you ]?\n   (너는 모자를 몇 개 가지고 있니?)\n2) [ am / have / seven hats / I ].\n   (나는 모자를 일곱 개 가지고 있어.)\n3) [ you / watch / are / do / How often / TV ]?\n   (너는 얼마나 자주 텔레비전을 보니?)\n4) [ watch / am / it / I / once a week ].\n   (나는 일주일에 한 번 봐.)",
           "이미지 설명": "없음 (단어 블록 배열 문제)"
         },
@@ -197,9 +197,9 @@
           "지문/예문": "How is the weather in Oklahoma?\nHow old is your brother?\nHow often do you watch TV?",
           "문제 원문": "[I] [ ]의 말을 사용하여 영문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ the party / is / was / yesterday / How ]?\n   (어제 파티는 어땠니?)\n2) [ are / do / How old / you ]?\n   (너는 몇 살이니?)\n3) [ she / How often / travel abroad / does / is ]?\n   (그녀는 얼마나 자주 해외 여행을 다니니?)",
           "정답": "1) How was the party yesterday? (is 미사용)\n2) How old are you? (do 미사용)\n3) How often does she travel abroad? (is 미사용)",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) How was the party yesterday? (is 미사용)\n2) How old are you? (do 미사용)\n3) How often does she travel abroad? (is 미사용)",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[I] [ ]의 말을 사용하여 영문을 완성하시오. (사용하지 않는 단어가 하나 있습니다.)\n1) [ the party / is / was / yesterday / How ]?\n   (어제 파티는 어땠니?)\n2) [ are / do / How old / you ]?\n   (너는 몇 살이니?)\n3) [ she / How often / travel abroad / does / is ]?\n   (그녀는 얼마나 자주 해외 여행을 다니니?)",
           "이미지 설명": "없음"
         },
@@ -209,9 +209,9 @@
           "지문/예문": "(127a 내용 복습)",
           "문제 원문": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 영문을 완성하시오.\n□ five years old · the party · abroad\n   abroad once a year · fun\n\n1) (파티 그림 — 어제 파티)\n   How was ___ yesterday?\n   It was ___.\n2) (5살 어린이 그림)\n   How old are ___?\n   She is ___.\n3) (해외 여행 그림)\n   How often does she travel ___?\n   She travels ___ ___.",
           "정답": "1) How was the party yesterday? / It was fun.\n2) How old are you? / She is five years old.\n3) How often does she travel abroad? / She travels abroad once a year.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) How was the party yesterday? / It was fun.\n2) How old are you? / She is five years old.\n3) How often does she travel abroad? / She travels abroad once a year.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 영문을 완성하시오.\n□ five years old · the party · abroad\n   abroad once a year · fun\n\n1) (파티 그림 — 어제 파티)\n   How was ___ yesterday?\n   It was ___.\n2) (5살 어린이 그림)\n   How old are ___?\n   She is ___.\n3) (해외 여행 그림)\n   How often does she travel ___?\n   She travels ___ ___.",
           "이미지 설명": "파티 케이크 그림 / 5살 어린이 그림 / 여행 가방 든 여자 그림"
         },
@@ -221,9 +221,9 @@
           "지문/예문": "A: How is the weather in Oklahoma?\nB: It is fine.\n   We are going to have a picnic today.\n\nA: 오클라호마의 날씨는 어때?\nB: 맑아. 우리는 오늘 소풍 갈 예정이야.",
           "문제 원문": "[I] 다음 그림을 보고, 영문을 완성하시오.\n1) (How old 힌트)\n   A: How old ___ your brother ___?\n   B: He ___ nine years old ___.\n   A: Wow! He is really tall.",
           "정답": "1) A: How old is your brother?\n   B: He is nine years old.\n   A: Wow! He is really tall.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) A: How old is your brother?\n   B: He is nine years old.\n   A: Wow! He is really tall.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[I] 다음 그림을 보고, 영문을 완성하시오.\n1) (How old 힌트)\n   A: How old ___ your brother ___?\n   B: He ___ nine years old ___.\n   A: Wow! He is really tall.",
           "이미지 설명": "두 여자 날씨 이야기 / 소풍 장면 / 아이들 키 재는 그림"
         },
@@ -233,9 +233,9 @@
           "지문/예문": "(128a 내용 복습)",
           "문제 원문": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 영문을 완성하시오.\n□ your brother · nine years old\n   the weather in Oklahoma · fine\n\n1) (소풍 장면)\n   A: How ___ ___ ___?\n   B: It ___ ___.\n   We are going to have a picnic today.\n2) (How old 장면)\n   A: How old ___ ___ ___?\n   B: He ___ ___ ___ ___.\n   A: Wow! He is really tall.",
           "정답": "1) A: How is the weather in Oklahoma? / B: It is fine.\n2) A: How old is your brother? / B: He is nine years old.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) A: How is the weather in Oklahoma? / B: It is fine.\n2) A: How old is your brother? / B: He is nine years old.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 영문을 완성하시오.\n□ your brother · nine years old\n   the weather in Oklahoma · fine\n\n1) (소풍 장면)\n   A: How ___ ___ ___?\n   B: It ___ ___.\n   We are going to have a picnic today.\n2) (How old 장면)\n   A: How old ___ ___ ___?\n   B: He ___ ___ ___ ___.\n   A: Wow! He is really tall.",
           "이미지 설명": "소풍 / 아이들 키 재는 그림"
         },
@@ -245,9 +245,9 @@
           "지문/예문": "A: How many hats do you have?\nB: I have seven hats.\n   I wear a different hat every day.\n\nA: 당신은 모자를 몇 개 가지고 있어요?\nB: 나는 모자를 일곱 개 가지고 있어. 나는 매일 다른 모자를 써.",
           "문제 원문": "[I] 다음 그림을 보고, 영문을 완성하시오.\n1) (How often / watch 힌트)\n   A: How often ___ you ___ TV ___?\n   B: I ___ it once a week ___.\n   I am too busy.",
           "정답": "1) A: How often do you watch TV?\n   B: I watch it once a week.\n   I am too busy.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) A: How often do you watch TV?\n   B: I watch it once a week.\n   I am too busy.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[I] 다음 그림을 보고, 영문을 완성하시오.\n1) (How often / watch 힌트)\n   A: How often ___ you ___ TV ___?\n   B: I ___ it once a week ___.\n   I am too busy.",
           "이미지 설명": "모자 걸이+일주일 달력 그림 / TV 이야기 두 남자 그림"
         },
@@ -257,9 +257,9 @@
           "지문/예문": "(129a 내용 복습)",
           "문제 원문": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 영문을 완성하시오.\n□ it once a week · seven hats · TV · hats\n\n1) (모자 걸이 그림, How many / have)\n   A: How many ___ do you ___?\n   B: I have ___.\n   I wear a different hat every day.\n2) (TV 그림, How often / watch)\n   A: How often do you watch ___?\n   B: I watch ___ ___.\n   I am too busy.",
           "정답": "1) A: How many hats do you have? / B: I have seven hats.\n2) A: How often do you watch TV? / B: I watch it once a week.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) A: How many hats do you have? / B: I have seven hats.\n2) A: How often do you watch TV? / B: I watch it once a week.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[II] 다음 그림을 보고, □에서 알맞은 말을 골라 영문을 완성하시오.\n□ it once a week · seven hats · TV · hats\n\n1) (모자 걸이 그림, How many / have)\n   A: How many ___ do you ___?\n   B: I have ___.\n   I wear a different hat every day.\n2) (TV 그림, How often / watch)\n   A: How often do you watch ___?\n   B: I watch ___ ___.\n   I am too busy.",
           "이미지 설명": "모자 걸이 그림 / TV 이야기 두 남자 그림"
         },
@@ -269,9 +269,9 @@
           "지문/예문": "A: How often does your son play golf?\nB: He plays it once a week.\nA: Oh, how old is he now?\nB: He is seven years old.\n\nA: 당신 아들은 얼마나 자주 골프를 치나요?\nB: 그는 일주일에 한 번 쳐요.\nA: 아, 그는 지금 몇 살인가요?\nB: 그는 일곱 살이에요.",
           "문제 원문": "[I] 다음 그림을 보고, 영문을 완성하시오.\n1) (골프 그림)\n   A: How often ___ your son ___?\n   B: He plays it once a week.\n2) (나이 묻는 그림, 숫자 7)\n   Oh, how old ___ he now ___?\n   He is seven years old.",
           "정답": "1) A: How often does your son play golf?\n2) Oh, how old is he now? / He is seven years old.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n1) A: How often does your son play golf?\n2) Oh, how old is he now? / He is seven years old.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[I] 다음 그림을 보고, 영문을 완성하시오.\n1) (골프 그림)\n   A: How often ___ your son ___?\n   B: He plays it once a week.\n2) (나이 묻는 그림, 숫자 7)\n   Oh, how old ___ he now ___?\n   He is seven years old.",
           "이미지 설명": "두 남자 대화 / 골프 치는 아이 그림 (숫자 7)"
         },
@@ -281,9 +281,9 @@
           "지문/예문": "How is the weather in Oklahoma?\nHow old is your brother?\nHow many hats do you have?\nHow often do you watch TV?",
           "문제 원문": "[II] 다음 그림을 보고, 영문을 완성하시오.\n① (골프 그림, How often)\n   How often ___ your son ___?\n   He plays it ___ ___.\n② (나이 그림, how old)\n   Oh, how old ___ ___?\n   He is seven years old.",
           "정답": "① How often does your son play golf? / He plays it once a week.\n② Oh, how old is he now? / He is seven years old.",
-          "풀이 과정": "",
-          "단계별 힌트": "",
-          "힌트/보기": "",
+          "풀이 과정": "【풀이 안내】\n① How often does your son play golf? / He plays it once a week.\n② Oh, how old is he now? / He is seven years old.",
+          "단계별 힌트": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
+          "힌트/보기": "문장 구조: 의문사 + 동사 + 주어\n대답: It is/was + 형용사",
           "문제유형": "[II] 다음 그림을 보고, 영문을 완성하시오.\n① (골프 그림, How often)\n   How often ___ your son ___?\n   He plays it ___ ___.\n② (나이 그림, how old)\n   Oh, how old ___ ___?\n   He is seven years old.",
           "이미지 설명": "골프 치는 아이 / 나이 묻는 두 남자 그림\n[복습 박스] How ~? 4종 정리표"
         }
@@ -308,7 +308,7 @@
           "예문(영어)": "How is the weather in Oklahoma?\nHow was the party yesterday?",
           "뜻(한국어)": "오클라호마의 날씨는 어때?\n어제 파티는 어땠니?",
           "지도 포인트": "C121~122",
-          "관련 페이지": ""
+          "관련 페이지": "C121~130"
         },
         {
           "No": "2",
@@ -317,7 +317,7 @@
           "예문(영어)": "How old is your brother?\nHow old are you?",
           "뜻(한국어)": "너의 남동생은 몇 살이니?\n너는 몇 살이니?",
           "지도 포인트": "C122~123",
-          "관련 페이지": ""
+          "관련 페이지": "C122~130"
         },
         {
           "No": "3",
@@ -326,7 +326,7 @@
           "예문(영어)": "How many hats do you have?\nHow many bags does she have?",
           "뜻(한국어)": "당신은 모자를 몇 개 가지고 있어요?\n그녀는 가방을 몇 개 가지고 있니?",
           "지도 포인트": "C123~124",
-          "관련 페이지": ""
+          "관련 페이지": "C123~130"
         },
         {
           "No": "4",
@@ -335,7 +335,7 @@
           "예문(영어)": "How often do you watch TV?\nHow often does she travel abroad?",
           "뜻(한국어)": "당신은 얼마나 자주 TV를 봅니까?\n그녀는 얼마나 자주 해외 여행을 다니니?",
           "지도 포인트": "C124~125",
-          "관련 페이지": ""
+          "관련 페이지": "C124~130"
         },
         {
           "No": "5",
@@ -344,7 +344,7 @@
           "예문(영어)": "It is fine.\nIt was fun.",
           "뜻(한국어)": "맑아.\n재미있었어요.",
           "지도 포인트": "C121~122",
-          "관련 페이지": ""
+          "관련 페이지": "C121~122"
         },
         {
           "No": "6",
@@ -353,7 +353,7 @@
           "예문(영어)": "He is nine years old.\nI am five years old.",
           "뜻(한국어)": "그는 아홉 살이야.\n나는 다섯 살이에요.",
           "지도 포인트": "C122~123",
-          "관련 페이지": ""
+          "관련 페이지": "C122~123"
         },
         {
           "No": "7",
@@ -362,7 +362,7 @@
           "예문(영어)": "I have seven hats.\nShe has six bags.",
           "뜻(한국어)": "나는 모자를 일곱 개 가지고 있어.\n그녀는 가방을 여섯 개 가지고 있어.",
           "지도 포인트": "C123~124",
-          "관련 페이지": ""
+          "관련 페이지": "C123~124"
         },
         {
           "No": "8",
@@ -371,7 +371,7 @@
           "예문(영어)": "I watch it once a week.\nShe travels abroad once a year.",
           "뜻(한국어)": "나는 일주일에 한 번 봅니다.\n그녀는 일 년에 한 번 해외 여행을 다녀.",
           "지도 포인트": "C124~125",
-          "관련 페이지": ""
+          "관련 페이지": "C124~130"
         }
       ]
     },
@@ -559,7 +559,27 @@
         {
           "주제": "(단원 요약 내용을 입력하세요)",
           "핵심 내용": "단원: How ~? 문장 (How is the weather in Oklahoma?)  |  총 20페이지 (C121a ~ C130b)  |  ©2007 Kumon Institute of Education KIE KR",
-          "핵심 정답/예문": ""
+          "핵심 정답/예문": "[II] 1) How is the weather in Oklahoma?\n1) How is the weather in Oklahoma?\n   It is fine.\n2) How was the party yesterday?\n   It was fun.\n[II] 1) How old is your brother?"
+        },
+        {
+          "주제": "▶ How ~? (상태)",
+          "핵심 내용": "How is/was + 주어?\n대답: It is/was + 형용사.\n★ 날씨·상태는 항상 It으로 대답!\n과거→was / 현재→is",
+          "핵심 정답/예문": "How is the weather? / It is fine.\nHow was the party? / It was fun."
+        },
+        {
+          "주제": "▶ How old ~? (나이)",
+          "핵심 내용": "How old + is/are + 주어?\n대답: 주어 + is/am/are + 숫자 + years old.\n★ years old 절대 빠뜨리지 말기!\nbrother→He / sister→She",
+          "핵심 정답/예문": "How old is your brother? / He is nine years old."
+        },
+        {
+          "주제": "▶ How many ~? (수)",
+          "핵심 내용": "How many + 복수명사 + do/does + 주어 + have?\n대답: 주어 + have/has + 숫자 + 복수명사.\n★ 3인칭 단수 → does, has!",
+          "핵심 정답/예문": "How many hats do you have? / I have seven hats."
+        },
+        {
+          "주제": "▶ How often ~? (빈도)",
+          "핵심 내용": "How often + do/does + 주어 + 동사원형?\n대답: 주어 + 동사 + it + once/twice + a week/year.\n★ it = 앞서 나온 명사의 대명사!",
+          "핵심 정답/예문": "How often do you watch TV? / I watch it once a week."
         }
       ]
     }
