@@ -2,7 +2,10 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>구몬 학습 뷰어</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
@@ -32,12 +35,14 @@
   --font: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font); background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); height: 100vh; height: 100dvh; overflow: hidden; display: flex; flex-direction: column; -webkit-overflow-scrolling: touch; }
 
 /* ── 헤더 ── */
 #header {
   height: var(--header-h); background: var(--surface); border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; padding: 0 16px; gap: 12px; flex-shrink: 0; z-index: 100;
+  display: flex; align-items: center; padding: 0 16px; gap: 12px; flex-shrink: 0;
+  position: sticky; top: 0; z-index: 1000;
+  -webkit-transform: translateZ(0); transform: translateZ(0);
 }
 #logo { font-size: 18px; font-weight: 700; color: var(--accent); white-space: nowrap; }
 #logo span { color: var(--text2); font-weight: 400; font-size: 13px; margin-left: 6px; }
@@ -79,7 +84,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); heig
 mark { background: rgba(79,124,255,.3); color: var(--accent); border-radius: 2px; }
 
 /* ── 메인 레이아웃 ── */
-#main { display: flex; flex: 1; overflow: hidden; }
+#main { display: flex; flex: 1; overflow: hidden; min-height: 0; }
 
 /* ── 왼쪽 사이드바 ── */
 #sidebar {
@@ -118,8 +123,11 @@ mark { background: rgba(79,124,255,.3); color: var(--accent); border-radius: 2px
 }
 #pdf-toolbar {
   height: 40px; background: var(--surface); border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; padding: 0 12px; gap: 8px; flex-shrink: 0;
+  display: flex; align-items: center; padding: 0 8px; gap: 4px; flex-shrink: 0;
+  overflow-x: auto; overflow-y: hidden;
 }
+#pdf-toolbar::-webkit-scrollbar { height: 2px; }
+#pdf-toolbar::-webkit-scrollbar-thumb { background: var(--border); }
 .tb-btn {
   background: var(--surface2); border: 1px solid var(--border); color: var(--text2);
   border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;
@@ -127,8 +135,9 @@ mark { background: rgba(79,124,255,.3); color: var(--accent); border-radius: 2px
 }
 .tb-btn:hover { border-color: var(--accent); color: var(--text); }
 .tb-btn.active { background: rgba(79,124,255,.2); border-color: var(--accent); color: var(--accent); }
-#page-info { color: var(--text2); font-size: 12px; margin: 0 4px; }
-#zoom-val { color: var(--text2); font-size: 11px; min-width: 36px; text-align: center; }
+.tb-sep { width:1px; height:20px; background:var(--border); margin:0 2px; flex-shrink:0; }
+#zoom-val { color: var(--text2); font-size: 11px; min-width: 36px; text-align: center; white-space: nowrap; }
+#page-info { color: var(--text2); font-size: 12px; margin: 0 4px; white-space: nowrap; }
 #pdf-wrapper { flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start; padding: 20px; }
 #pdf-wrapper::-webkit-scrollbar { width: 6px; height: 6px; }
 #pdf-wrapper::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -252,7 +261,19 @@ mark { background: rgba(79,124,255,.3); color: var(--accent); border-radius: 2px
 .empty-state .e-icon { font-size: 36px; margin-bottom: 10px; }
 .empty-state .e-text { font-size: 13px; }
 
-/* 스크롤바 공통 */
+/* 태블릿 대응 */
+@media (max-width: 1024px) {
+  :root { --panel-w: 280px; --sidebar-w: 110px; }
+  #search-input { width: 140px; }
+  #logo span { display: none; }
+}
+@media (max-width: 768px) {
+  :root { --panel-w: 260px; --sidebar-w: 90px; }
+  #search-input { width: 120px; }
+  .subj-btn { padding: 5px 10px; font-size: 11px; }
+}
+/* 스크롤 중에도 헤더 고정 보장 */
+#header { will-change: transform; backface-visibility: hidden; }
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -299,18 +320,19 @@ mark { background: rgba(79,124,255,.3); color: var(--accent); border-radius: 2px
     <div id="pdf-toolbar">
       <button class="tb-btn active" id="btn-single" onclick="setView('single')">단면</button>
       <button class="tb-btn" id="btn-double" onclick="setView('double')">양면</button>
-      <div style="width:1px;height:20px;background:var(--border);margin:0 4px"></div>
+      <div class="tb-sep"></div>
       <button class="tb-btn" onclick="zoomOut()">－</button>
       <span id="zoom-val">100%</span>
       <button class="tb-btn" onclick="zoomIn()">＋</button>
+      <div class="tb-sep"></div>
       <button class="tb-btn" id="btn-fitw" onclick="fitWidth()">폭맞춤</button>
       <button class="tb-btn" id="btn-fitp" onclick="fitPage()">쪽맞춤</button>
-      <div style="flex:1"></div>
-      <span id="page-info">—</span>
+      <div class="tb-sep"></div>
       <button class="tb-btn" onclick="prevPage()">◀</button>
+      <span id="page-info">—</span>
       <button class="tb-btn" onclick="nextPage()">▶</button>
-      <div style="width:1px;height:20px;background:var(--border);margin:0 4px"></div>
-      <button class="tb-btn active" id="btn-panel" onclick="togglePanel()">📋 패널 ON</button>
+      <div class="tb-sep"></div>
+      <button class="tb-btn" id="btn-panel" onclick="togglePanel()">📋 패널</button>
     </div>
     <div id="pdf-wrapper">
       <div id="pdf-placeholder">
@@ -321,8 +343,8 @@ mark { background: rgba(79,124,255,.3); color: var(--accent); border-radius: 2px
     </div>
   </div>
 
-  <!-- 오른쪽 패널 -->
-  <div id="panel">
+  <!-- 오른쪽 패널 (기본: 숨김) -->
+  <div id="panel" style="display:none">
     <div id="panel-tabs">
       <button class="panel-tab active" onclick="showTab('toc',this)">📋 목차</button>
       <button class="panel-tab" onclick="showTab('summary',this)">⚡ 요점</button>
@@ -589,13 +611,13 @@ function applyZoom() {
 }
 
 // ── 패널 ON/OFF ──────────────────────────────────────
-let panelVisible = true;
+let panelVisible = false;  // 기본값: 패널 OFF
 function togglePanel() {
   panelVisible = !panelVisible;
   const panel = document.getElementById('panel');
   const btn   = document.getElementById('btn-panel');
   panel.style.display = panelVisible ? 'flex' : 'none';
-  btn.textContent = panelVisible ? '📋 패널 ON' : '📋 패널 OFF';
+  btn.textContent = panelVisible ? '📋 패널 ON' : '📋 패널';
   btn.classList.toggle('active', panelVisible);
 }
 
