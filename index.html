@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>구몬 학습 뷰어</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #22263a;
+  --border: #2e3350;
+  --accent: #4f7cff;
+  --accent2: #ff6b6b;
+  --text: #e8eaf6;
+  --text2: #8892b0;
+  --text3: #4a5568;
+  --ans: #43e97b;
+  --ans-bg: #0d2b1a;
+  --guide: #ce93d8;
+  --guide-bg: #1a0d2b;
+  --hint: #ffb74d;
+  --hint-bg: #2b1a0d;
+  --sol: #64b5f6;
+  --sol-bg: #0d1a2b;
+  --panel-w: 340px;
+  --sidebar-w: 140px;
+  --header-h: 52px;
+  --tab-h: 44px;
+  --radius: 10px;
+  --font: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+
+/* ── 헤더 ── */
+#header {
+  height: var(--header-h); background: var(--surface); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 16px; gap: 12px; flex-shrink: 0; z-index: 100;
+}
+#logo { font-size: 18px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+#logo span { color: var(--text2); font-weight: 400; font-size: 13px; margin-left: 6px; }
+
+/* 과목 탭 */
+#subject-tabs { display: flex; gap: 4px; overflow-x: auto; flex: 1; }
+#subject-tabs::-webkit-scrollbar { height: 3px; }
+#subject-tabs::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.subj-btn {
+  padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
+  background: transparent; color: var(--text2); font-size: 12px; font-family: var(--font);
+  cursor: pointer; white-space: nowrap; transition: all .2s;
+}
+.subj-btn:hover { border-color: var(--accent); color: var(--text); }
+.subj-btn.active { color: #fff; border-color: transparent; font-weight: 600; }
+
+#search-wrap { position: relative; }
+#search-input {
+  background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+  border-radius: 20px; padding: 6px 36px 6px 14px; font-size: 12px; font-family: var(--font);
+  width: 180px; outline: none; transition: border-color .2s;
+}
+#search-input:focus { border-color: var(--accent); }
+#search-input::placeholder { color: var(--text3); }
+#search-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 14px; }
+#search-results {
+  position: absolute; right: 0; top: 38px; width: 320px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius); max-height: 300px;
+  overflow-y: auto; z-index: 999; display: none;
+}
+.search-item {
+  padding: 10px 14px; cursor: pointer; border-bottom: 1px solid var(--border);
+  font-size: 12px; transition: background .15s;
+}
+.search-item:hover { background: var(--surface2); }
+.search-item .s-pid { color: var(--accent); font-weight: 700; font-size: 11px; }
+.search-item .s-subj { color: var(--text2); font-size: 11px; }
+.search-item .s-text { color: var(--text); margin-top: 2px; }
+mark { background: rgba(79,124,255,.3); color: var(--accent); border-radius: 2px; }
+
+/* ── 메인 레이아웃 ── */
+#main { display: flex; flex: 1; overflow: hidden; }
+
+/* ── 왼쪽 사이드바 ── */
+#sidebar {
+  width: var(--sidebar-w); background: var(--surface); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0;
+}
+#book-list { padding: 8px; overflow-y: auto; flex: 1; }
+#book-list::-webkit-scrollbar { width: 4px; }
+#book-list::-webkit-scrollbar-thumb { background: var(--border); }
+.book-item {
+  padding: 8px 6px; border-radius: 6px; cursor: pointer; margin-bottom: 4px;
+  border: 1px solid transparent; transition: all .2s; text-align: center;
+}
+.book-item:hover { background: var(--surface2); border-color: var(--border); }
+.book-item.active { background: rgba(79,124,255,.15); border-color: var(--accent); }
+.book-emoji { font-size: 18px; display: block; margin-bottom: 3px; }
+.book-label { font-size: 10px; color: var(--text2); line-height: 1.3; }
+.book-item.active .book-label { color: var(--text); }
+
+#thumbnail-list { border-top: 1px solid var(--border); overflow-y: auto; flex: 1; padding: 4px; }
+#thumbnail-list::-webkit-scrollbar { width: 3px; }
+#thumbnail-list::-webkit-scrollbar-thumb { background: var(--border); }
+.thumb-item {
+  padding: 6px 4px; border-radius: 6px; cursor: pointer; margin-bottom: 3px;
+  border: 1px solid transparent; transition: all .15s; text-align: center;
+  font-size: 10px; color: var(--text2);
+}
+.thumb-item:hover { background: var(--surface2); }
+.thumb-item.active { background: rgba(79,124,255,.2); border-color: var(--accent); color: var(--text); font-weight: 600; }
+.thumb-done { color: var(--ans) !important; }
+.thumb-done::after { content: ' ✓'; }
+
+/* ── 중앙 PDF 뷰어 ── */
+#center {
+  flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #0a0b10;
+}
+#pdf-toolbar {
+  height: 40px; background: var(--surface); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 12px; gap: 8px; flex-shrink: 0;
+}
+.tb-btn {
+  background: var(--surface2); border: 1px solid var(--border); color: var(--text2);
+  border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer;
+  font-family: var(--font); transition: all .15s;
+}
+.tb-btn:hover { border-color: var(--accent); color: var(--text); }
+.tb-btn.active { background: rgba(79,124,255,.2); border-color: var(--accent); color: var(--accent); }
+#page-info { color: var(--text2); font-size: 12px; margin: 0 4px; }
+#zoom-val { color: var(--text2); font-size: 11px; min-width: 36px; text-align: center; }
+#pdf-wrapper { flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start; padding: 20px; }
+#pdf-wrapper::-webkit-scrollbar { width: 6px; height: 6px; }
+#pdf-wrapper::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+#pdf-canvas { box-shadow: 0 8px 40px rgba(0,0,0,.6); border-radius: 4px; max-width: 100%; }
+#pdf-placeholder {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex: 1; color: var(--text3); gap: 12px;
+}
+#pdf-placeholder .ph-emoji { font-size: 48px; }
+#pdf-placeholder .ph-text { font-size: 14px; }
+
+/* 양면 모드 */
+#pdf-double { display: flex; gap: 8px; }
+#pdf-canvas-r { box-shadow: 0 8px 40px rgba(0,0,0,.6); border-radius: 4px; }
+
+/* ── 오른쪽 패널 ── */
+#panel {
+  width: var(--panel-w); background: var(--surface); border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; flex-shrink: 0;
+}
+#panel-tabs {
+  display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; overflow-x: auto;
+}
+#panel-tabs::-webkit-scrollbar { height: 3px; }
+.panel-tab {
+  flex: 1; min-width: 52px; padding: 0 6px; height: var(--tab-h); border: none;
+  background: transparent; color: var(--text2); font-size: 11px; cursor: pointer;
+  font-family: var(--font); border-bottom: 2px solid transparent;
+  transition: all .15s; white-space: nowrap;
+}
+.panel-tab:hover { color: var(--text); background: var(--surface2); }
+.panel-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+#panel-content { flex: 1; overflow-y: auto; padding: 14px; }
+#panel-content::-webkit-scrollbar { width: 4px; }
+#panel-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* 패널 공통 카드 */
+.p-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px; margin-bottom: 10px;
+}
+.p-card-title {
+  font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase;
+  letter-spacing: .5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+.p-card-title::before { content: ''; display: block; width: 3px; height: 12px; border-radius: 2px; background: currentColor; }
+.p-card-body { font-size: 13px; line-height: 1.7; color: var(--text); }
+.p-ans { background: var(--ans-bg); border-color: rgba(67,233,123,.2); }
+.p-ans .p-card-title { color: var(--ans); }
+.p-guide { background: var(--guide-bg); border-color: rgba(206,147,216,.2); }
+.p-guide .p-card-title { color: var(--guide); }
+.p-hint { background: var(--hint-bg); border-color: rgba(255,183,77,.2); }
+.p-hint .p-card-title { color: var(--hint); }
+.p-sol { background: var(--sol-bg); border-color: rgba(100,181,246,.2); }
+.p-sol .p-card-title { color: var(--sol); }
+
+/* 목차 아이템 */
+.toc-item {
+  padding: 7px 10px; border-radius: 6px; cursor: pointer; margin-bottom: 3px;
+  display: flex; align-items: center; gap: 8px; transition: background .15s;
+  border: 1px solid transparent;
+}
+.toc-item:hover { background: var(--surface2); }
+.toc-item.active { background: rgba(79,124,255,.15); border-color: rgba(79,124,255,.3); }
+.toc-pid { font-size: 11px; font-weight: 700; color: var(--accent); min-width: 44px; }
+.toc-subj { font-size: 12px; color: var(--text2); flex: 1; }
+.toc-done { color: var(--ans); font-size: 12px; }
+
+/* 키워드 사전 */
+.kw-item { padding: 10px; border-radius: 8px; background: var(--surface2); margin-bottom: 8px; border: 1px solid var(--border); }
+.kw-term { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+.kw-def  { font-size: 12px; color: var(--text); line-height: 1.6; }
+.kw-guide { font-size: 11px; color: var(--guide); margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+.kw-err  { font-size: 11px; color: var(--hint); margin-top: 4px; }
+.kw-q    { font-size: 11px; color: var(--sol); margin-top: 4px; font-style: italic; }
+.kw-page { font-size: 10px; color: var(--text3); margin-top: 4px; }
+
+/* 완료 버튼 */
+#done-btn {
+  margin: 10px 14px; padding: 10px; border-radius: 8px; border: 1px dashed var(--border);
+  background: transparent; color: var(--text2); font-family: var(--font); font-size: 13px;
+  cursor: pointer; transition: all .2s; text-align: center;
+}
+#done-btn:hover { border-color: var(--ans); color: var(--ans); }
+#done-btn.done { background: var(--ans-bg); border-color: var(--ans); color: var(--ans); border-style: solid; }
+
+/* 패널 하단 네비 */
+#panel-nav {
+  border-top: 1px solid var(--border); padding: 10px 14px; display: flex;
+  align-items: center; gap: 8px; flex-shrink: 0;
+}
+.nav-btn {
+  flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface2); color: var(--text2); font-family: var(--font);
+  font-size: 12px; cursor: pointer; transition: all .15s; text-align: center;
+}
+.nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+#nav-move {
+  flex: 1.5; padding: 8px; border-radius: 8px; border: none;
+  background: var(--accent); color: #fff; font-family: var(--font);
+  font-size: 12px; font-weight: 700; cursor: pointer; transition: opacity .15s;
+}
+#nav-move:hover { opacity: .85; }
+
+/* 로딩 */
+#loading {
+  position: fixed; inset: 0; background: rgba(15,17,23,.85);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999; flex-direction: column; gap: 16px; display: none;
+}
+.spinner {
+  width: 40px; height: 40px; border: 3px solid var(--border);
+  border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+#loading-text { color: var(--text2); font-size: 14px; }
+
+/* 빈 상태 */
+.empty-state { text-align: center; padding: 40px 20px; color: var(--text3); }
+.empty-state .e-icon { font-size: 36px; margin-bottom: 10px; }
+.empty-state .e-text { font-size: 13px; }
+
+/* 스크롤바 공통 */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* 단원 요약 */
+.summary-item { padding: 12px; border-radius: 8px; background: var(--surface2); margin-bottom: 10px; border-left: 3px solid var(--accent); }
+.summary-topic { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+.summary-content { font-size: 12px; color: var(--text); line-height: 1.7; white-space: pre-wrap; }
+.summary-ans { font-size: 11px; color: var(--ans); margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<div id="header">
+  <div id="logo">구몬 뷰어 <span>학습 자료 디지털화</span></div>
+  <div id="subject-tabs">
+    <button class="subj-btn active" data-subj="all" onclick="filterSubject('all',this)">📚 전체</button>
+    <button class="subj-btn" data-subj="math" onclick="filterSubject('math',this)" style="--c:#4f7cff">📐 수학</button>
+    <button class="subj-btn" data-subj="science" onclick="filterSubject('science',this)" style="--c:#43e97b">🔬 과학</button>
+    <button class="subj-btn" data-subj="english" onclick="filterSubject('english',this)" style="--c:#ce93d8">🔤 영어</button>
+    <button class="subj-btn" data-subj="korean" onclick="filterSubject('korean',this)" style="--c:#ff6b6b">📖 국어</button>
+    <button class="subj-btn" data-subj="hanja" onclick="filterSubject('hanja',this)" style="--c:#ffb74d">字 한자</button>
+    <button class="subj-btn" data-subj="chinese" onclick="filterSubject('chinese',this)" style="--c:#ff6b6b">🇨🇳 중국어</button>
+    <button class="subj-btn" data-subj="japanese" onclick="filterSubject('japanese',this)" style="--c:#f48fb1">🇯🇵 일본어</button>
+  </div>
+  <div id="search-wrap">
+    <input id="search-input" type="text" placeholder="🔍 전체 검색..." oninput="onSearch(this.value)">
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<!-- 메인 -->
+<div id="main">
+
+  <!-- 왼쪽 사이드바: 교재목록 + 썸네일 -->
+  <div id="sidebar">
+    <div id="book-list"></div>
+    <div id="thumbnail-list"></div>
+  </div>
+
+  <!-- 중앙 PDF -->
+  <div id="center">
+    <div id="pdf-toolbar">
+      <button class="tb-btn active" id="btn-single" onclick="setView('single')">단면</button>
+      <button class="tb-btn" id="btn-double" onclick="setView('double')">양면</button>
+      <div style="width:1px;height:20px;background:var(--border);margin:0 4px"></div>
+      <button class="tb-btn" onclick="zoomOut()">－</button>
+      <span id="zoom-val">100%</span>
+      <button class="tb-btn" onclick="zoomIn()">＋</button>
+      <button class="tb-btn" onclick="fitWidth()">맞춤</button>
+      <div style="flex:1"></div>
+      <span id="page-info">—</span>
+      <button class="tb-btn" onclick="prevPage()">◀</button>
+      <button class="tb-btn" onclick="nextPage()">▶</button>
+    </div>
+    <div id="pdf-wrapper">
+      <div id="pdf-placeholder">
+        <div class="ph-emoji">📚</div>
+        <div class="ph-text">왼쪽에서 교재를 선택하세요</div>
+      </div>
+      <canvas id="pdf-canvas" style="display:none"></canvas>
+    </div>
+  </div>
+
+  <!-- 오른쪽 패널 -->
+  <div id="panel">
+    <div id="panel-tabs">
+      <button class="panel-tab active" onclick="showTab('toc',this)">📋 목차</button>
+      <button class="panel-tab" onclick="showTab('summary',this)">⚡ 요점</button>
+      <button class="panel-tab" onclick="showTab('solution',this)">✏️ 풀이</button>
+      <button class="panel-tab" onclick="showTab('guide',this)">👩‍🏫 지도</button>
+      <button class="panel-tab" onclick="showTab('dict',this)">📚 사전</button>
+    </div>
+    <div id="panel-content">
+      <div class="empty-state"><div class="e-icon">📖</div><div class="e-text">교재를 선택하면<br>내용이 표시됩니다</div></div>
+    </div>
+    <button id="done-btn" onclick="toggleDone()">✓ 이 페이지 완료 표시</button>
+    <div id="panel-nav">
+      <button class="nav-btn" onclick="prevPage()">◀ 이전</button>
+      <button id="nav-move" onclick="goToPage()">■ 이동</button>
+      <button class="nav-btn" onclick="nextPage()">다음 ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- 로딩 -->
+<div id="loading">
+  <div class="spinner"></div>
+  <div id="loading-text">불러오는 중...</div>
+</div>
+
+<script>
+// ── 설정 ──────────────────────────────────────────────
+const BASE_URL   = 'https://powerstorm1014.github.io/kumon-math-viewer/';
+const PDF_BASE   = BASE_URL + 'pdf/';
+const DATA_BASE  = BASE_URL + 'data/';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+// ── 상태 ──────────────────────────────────────────────
+let allBooks    = [];
+let currentBook = null;
+let currentData = null;
+let currentPageIdx = 0;   // 0-based PDF 페이지
+let pdfDoc      = null;
+let zoom        = 1.0;
+let viewMode    = 'single'; // 'single' | 'double'
+let activeTab   = 'toc';
+let donePages   = JSON.parse(localStorage.getItem('kumon_done') || '{}');
+let currentSubj = 'all';
+
+// ── 초기화 ───────────────────────────────────────────
+async function init() {
+  showLoading('교재 목록 로드 중...');
+  try {
+    const res  = await fetch(DATA_BASE + 'index.json');
+    allBooks   = await res.json();
+    renderBookList(allBooks);
+  } catch(e) {
+    // 로컬 테스트용 샘플
+    allBooks = getSampleIndex();
+    renderBookList(allBooks);
+  }
+  hideLoading();
+}
+
+function getSampleIndex() {
+  return [
+    {key:'kumon-math-D-071-080',subject:'math',subjectKo:'수학',emoji:'📐',color:'#1A3A6B',stage:'D',pages:'071-080',title:'곱셈과 나눗셈 2',pdfFile:'kumon-math-D-071-080.pdf',dataFile:'data/kumon-math-D-071-080.json',totalPages:20},
+    {key:'kumon-math-D-131-140',subject:'math',subjectKo:'수학',emoji:'📐',color:'#1A3A6B',stage:'D',pages:'131-140',title:'나눗셈 1',pdfFile:'kumon-math-D-131-140.pdf',dataFile:'data/kumon-math-D-131-140.json',totalPages:20},
+    {key:'kumon-math-E-171-180',subject:'math',subjectKo:'수학',emoji:'📐',color:'#1A3A6B',stage:'E',pages:'171-180',title:'분수의 곱셈과 나눗셈',pdfFile:'kumon-math-E-171-180.pdf',dataFile:'data/kumon-math-E-171-180.json',totalPages:20},
+    {key:'kumon-math-H-081-090',subject:'math',subjectKo:'수학',emoji:'📐',color:'#1A3A6B',stage:'H',pages:'081-090',title:'삼원·사원연립방정식',pdfFile:'kumon-math-H-081-090.pdf',dataFile:'data/kumon-math-H-081-090.json',totalPages:20},
+    {key:'kumon-science-D-081-090',subject:'science',subjectKo:'과학',emoji:'🔬',color:'#1B5E20',stage:'D',pages:'081-090',title:'물의 상태 변화',pdfFile:'kumon-science-D-081-090.pdf',dataFile:'data/kumon-science-D-081-090.json',totalPages:20},
+    {key:'kumon-science-H-101-110',subject:'science',subjectKo:'과학',emoji:'🔬',color:'#1B5E20',stage:'H',pages:'101-110',title:'전류의 자기 작용',pdfFile:'kumon-science-H-101-110.pdf',dataFile:'data/kumon-science-H-101-110.json',totalPages:20},
+    {key:'kumon-english-C-121-130',subject:'english',subjectKo:'영어',emoji:'🔤',color:'#4A0E8F',stage:'C',pages:'121-130',title:'How ~? 문장',pdfFile:'kumon-english-C-121-130.pdf',dataFile:'data/kumon-english-C-121-130.json',totalPages:20},
+    {key:'kumon-english-C-131-140',subject:'english',subjectKo:'영어',emoji:'🔤',color:'#4A0E8F',stage:'C',pages:'131-140',title:'감탄문',pdfFile:'kumon-english-C-131-140.pdf',dataFile:'data/kumon-english-C-131-140.json',totalPages:20},
+    {key:'kumon-korean-E1-101-110',subject:'korean',subjectKo:'국어',emoji:'📖',color:'#7B1A1A',stage:'E1',pages:'101-110',title:'문장의 접속 5',pdfFile:'kumon-korean-E1-101-110.pdf',dataFile:'data/kumon-korean-E1-101-110.json',totalPages:20},
+    {key:'kumon-korean-G1-041-050',subject:'korean',subjectKo:'국어',emoji:'📖',color:'#7B1A1A',stage:'G1',pages:'041-050',title:'독서 노트 21~25',pdfFile:'kumon-korean-G1-041-050.pdf',dataFile:'data/kumon-korean-G1-041-050.json',totalPages:20},
+    {key:'kumon-hanja-D2-031-040',subject:'hanja',subjectKo:'한자',emoji:'字',color:'#5D4037',stage:'D2',pages:'031-040',title:'한자의 여러 가지 뜻 4',pdfFile:'kumon-hanja-D2-031-040.pdf',dataFile:'data/kumon-hanja-D2-031-040.json',totalPages:20},
+    {key:'kumon-chinese-D-131-140',subject:'chinese',subjectKo:'중국어',emoji:'🇨🇳',color:'#B71C1C',stage:'D',pages:'131-140',title:'미래의 要~了',pdfFile:'kumon-chinese-D-131-140.pdf',dataFile:'data/kumon-chinese-D-131-140.json',totalPages:20},
+    {key:'kumon-japanese-C-171-180',subject:'japanese',subjectKo:'일본어',emoji:'🇯🇵',color:'#880E4F',stage:'C',pages:'171-180',title:'부사 1',pdfFile:'kumon-japanese-C-171-180.pdf',dataFile:'data/kumon-japanese-C-171-180.json',totalPages:20},
+  ];
+}
+
+// ── 교재 목록 렌더링 ─────────────────────────────────
+function renderBookList(books) {
+  const filtered = currentSubj === 'all' ? books : books.filter(b => b.subject === currentSubj);
+  const el = document.getElementById('book-list');
+  el.innerHTML = '';
+  filtered.forEach(b => {
+    const div = document.createElement('div');
+    div.className = 'book-item' + (currentBook?.key === b.key ? ' active' : '');
+    div.innerHTML = `<span class="book-emoji">${b.emoji}</span><span class="book-label">${b.subjectKo}<br>${b.stage}단계<br>${b.pages}</span>`;
+    div.onclick = () => loadBook(b);
+    el.appendChild(div);
+  });
+}
+
+function filterSubject(subj, btn) {
+  currentSubj = subj;
+  document.querySelectorAll('.subj-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBookList(allBooks);
+}
+
+// ── 교재 로드 ─────────────────────────────────────────
+async function loadBook(book) {
+  showLoading('교재 데이터 로드 중...');
+  currentBook = book;
+  currentPageIdx = 0;
+  renderBookList(allBooks);
+
+  // JSON 데이터 로드
+  try {
+    const res  = await fetch(DATA_BASE + book.key + '.json');
+    currentData = await res.json();
+  } catch(e) {
+    currentData = null;
+  }
+
+  // 썸네일 렌더링
+  renderThumbnails();
+
+  // PDF 로드
+  await loadPDF(PDF_BASE + book.pdfFile);
+
+  // 패널 업데이트
+  renderPanel();
+  hideLoading();
+}
+
+function renderThumbnails() {
+  const el = document.getElementById('thumbnail-list');
+  el.innerHTML = '';
+  if (!currentData) return;
+  const pageList = currentData.pageList || [];
+  pageList.forEach((pid, i) => {
+    const key = `${currentBook.key}__${pid}`;
+    const done = donePages[key];
+    const div = document.createElement('div');
+    div.className = 'thumb-item' + (i === currentPageIdx ? ' active' : '') + (done ? ' thumb-done' : '');
+    div.id = `thumb-${i}`;
+    div.textContent = pid;
+    div.onclick = () => goToPageIdx(i);
+    el.appendChild(div);
+  });
+}
+
+// ── PDF 렌더링 ───────────────────────────────────────
+async function loadPDF(url) {
+  document.getElementById('pdf-placeholder').style.display = 'none';
+  document.getElementById('pdf-canvas').style.display = 'none';
+  showLoading('PDF 로드 중...');
+  try {
+    pdfDoc = await pdfjsLib.getDocument(url).promise;
+    await renderPDFPage(currentPageIdx + 1);
+    updatePageInfo();
+  } catch(e) {
+    document.getElementById('pdf-placeholder').style.display = 'flex';
+    document.getElementById('pdf-placeholder').querySelector('.ph-text').textContent =
+      'PDF를 불러올 수 없습니다.\nGitHub에 PDF가 업로드되어 있는지 확인해주세요.';
+  }
+  hideLoading();
+}
+
+async function renderPDFPage(pageNum) {
+  if (!pdfDoc) return;
+  const page    = await pdfDoc.getPage(pageNum);
+  const canvas  = document.getElementById('pdf-canvas');
+  const wrapper = document.getElementById('pdf-wrapper');
+  const vp      = page.getViewport({ scale: zoom });
+  canvas.width  = vp.width;
+  canvas.height = vp.height;
+  canvas.style.display = 'block';
+  await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+  updatePageInfo();
+}
+
+function updatePageInfo() {
+  const total = pdfDoc ? pdfDoc.numPages : 0;
+  document.getElementById('page-info').textContent =
+    total ? `${currentPageIdx + 1} / ${total}` : '—';
+}
+
+// ── 페이지 이동 ──────────────────────────────────────
+async function goToPageIdx(idx) {
+  if (!pdfDoc) return;
+  const max = pdfDoc.numPages - 1;
+  currentPageIdx = Math.max(0, Math.min(idx, max));
+  // 썸네일 업데이트
+  document.querySelectorAll('.thumb-item').forEach((el,i) => {
+    el.classList.toggle('active', i === currentPageIdx);
+  });
+  // 썸네일 스크롤
+  const thumb = document.getElementById(`thumb-${currentPageIdx}`);
+  if (thumb) thumb.scrollIntoView({ block: 'nearest' });
+  await renderPDFPage(currentPageIdx + 1);
+  renderPanel();
+}
+
+async function prevPage() { await goToPageIdx(currentPageIdx - 1); }
+async function nextPage() { await goToPageIdx(currentPageIdx + 1); }
+async function goToPage() {
+  const p = prompt('이동할 페이지 번호:', currentPageIdx + 1);
+  if (p) await goToPageIdx(parseInt(p) - 1);
+}
+
+// ── 줌 ──────────────────────────────────────────────
+function zoomIn()  { zoom = Math.min(zoom + 0.25, 3.0);  applyZoom(); }
+function zoomOut() { zoom = Math.max(zoom - 0.25, 0.5);  applyZoom(); }
+function fitWidth() {
+  const w = document.getElementById('pdf-wrapper').clientWidth - 40;
+  if (pdfDoc) {
+    pdfDoc.getPage(currentPageIdx + 1).then(page => {
+      const vp = page.getViewport({ scale: 1 });
+      zoom = w / vp.width;
+      applyZoom();
+    });
+  }
+}
+function applyZoom() {
+  document.getElementById('zoom-val').textContent = Math.round(zoom * 100) + '%';
+  renderPDFPage(currentPageIdx + 1);
+}
+
+// ── 뷰 모드 ─────────────────────────────────────────
+function setView(mode) {
+  viewMode = mode;
+  document.getElementById('btn-single').classList.toggle('active', mode === 'single');
+  document.getElementById('btn-double').classList.toggle('active', mode === 'double');
+  renderPDFPage(currentPageIdx + 1);
+}
+
+// ── 완료 체크 ────────────────────────────────────────
+function toggleDone() {
+  if (!currentBook || !currentData) return;
+  const pid = currentData.pageList?.[currentPageIdx];
+  if (!pid) return;
+  const key = `${currentBook.key}__${pid}`;
+  donePages[key] = !donePages[key];
+  localStorage.setItem('kumon_done', JSON.stringify(donePages));
+  const btn = document.getElementById('done-btn');
+  btn.classList.toggle('done', !!donePages[key]);
+  btn.textContent = donePages[key] ? '✓ 완료됨' : '✓ 이 페이지 완료 표시';
+  // 썸네일 업데이트
+  const thumb = document.getElementById(`thumb-${currentPageIdx}`);
+  if (thumb) thumb.classList.toggle('thumb-done', !!donePages[key]);
+}
+
+// ── 패널 탭 ─────────────────────────────────────────
+function showTab(tab, btn) {
+  activeTab = tab;
+  document.querySelectorAll('.panel-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPanel();
+}
+
+function renderPanel() {
+  if (!currentData) return;
+  const pid  = currentData.pageList?.[currentPageIdx] || '';
+  const s1   = currentData.sheets?.s1?.data || [];
+  const s2   = currentData.sheets?.s2?.data || [];
+  const s3   = currentData.sheets?.s3?.data || [];
+  const s4   = currentData.sheets?.s4?.data || [];
+  const pageData = s1.find(r => r['페이지ID'] === pid) || {};
+  const pageSum  = s3.find(r => (r['페이지'] || r['페이지ID'] || '') === pid) || {};
+
+  // 완료 버튼
+  const key  = `${currentBook.key}__${pid}`;
+  const done = donePages[key];
+  const btn  = document.getElementById('done-btn');
+  btn.classList.toggle('done', !!done);
+  btn.textContent = done ? '✓ 완료됨' : '✓ 이 페이지 완료 표시';
+
+  const el = document.getElementById('panel-content');
+
+  if (activeTab === 'toc') {
+    renderToc(el, s1, s3);
+  } else if (activeTab === 'summary') {
+    renderSummary(el, pageData, pageSum, s4, pid);
+  } else if (activeTab === 'solution') {
+    renderSolution(el, pageData);
+  } else if (activeTab === 'guide') {
+    renderGuide(el, pageData, pageSum, s2, pid);
+  } else if (activeTab === 'dict') {
+    renderDict(el, s2);
+  }
+}
+
+// 목차 탭
+function renderToc(el, s1, s3) {
+  let html = `<div class="p-card"><div class="p-card-title">📋 전체 페이지 목록</div></div>`;
+  s1.forEach((row, i) => {
+    const pid  = row['페이지ID'] || '';
+    const subj = row['학습주제'] || '';
+    const key  = `${currentBook.key}__${pid}`;
+    const done = donePages[key];
+    const act  = i === currentPageIdx ? ' active' : '';
+    html += `<div class="toc-item${act}" onclick="goToPageIdx(${i})">
+      <span class="toc-pid">${pid}</span>
+      <span class="toc-subj">${subj.split('\n')[0].substring(0,28)}</span>
+      ${done ? '<span class="toc-done">✓</span>' : ''}
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+// 요점정리 탭
+function renderSummary(el, pageData, pageSum, s4, pid) {
+  let html = '';
+  const subj = pageData['학습주제'] || pageSum['학습주제'] || '';
+  const pts  = pageSum['핵심 포인트'] || '';
+  const ans  = pageData['정답'] || pageSum['정답 모음'] || '';
+  const spec = pageSum['특이사항'] || '';
+
+  if (subj) html += `<div class="p-card"><div class="p-card-title">🎯 이 페이지의 핵심 주제</div><div class="p-card-body" style="font-weight:700;font-size:14px">${escHtml(subj)}</div></div>`;
+
+  if (pts) {
+    const bullets = pts.split('\n').filter(Boolean).map(p => `<div style="padding:3px 0;border-bottom:1px solid var(--border)">▶ ${escHtml(p)}</div>`).join('');
+    html += `<div class="p-card"><div class="p-card-title">⭐ 핵심 포인트</div><div class="p-card-body">${bullets}</div></div>`;
+  }
+
+  if (ans) html += `<div class="p-card p-ans"><div class="p-card-title">✅ 정답 요약</div><div class="p-card-body" style="white-space:pre-wrap">${escHtml(ans)}</div></div>`;
+  if (spec) html += `<div class="p-card p-hint"><div class="p-card-title">📌 특이사항</div><div class="p-card-body">${escHtml(spec)}</div></div>`;
+
+  // 단원 전체 요약
+  if (s4.length > 1) {
+    html += `<div class="p-card" style="margin-top:14px"><div class="p-card-title">⚡ 단원 전체 요약</div></div>`;
+    s4.forEach(row => {
+      const topic = row['주제'] || '';
+      const cont  = row['핵심 내용'] || '';
+      const kans  = row['핵심 정답/예문'] || row['핵심 정답'] || row['핵심 예문'] || '';
+      if (!topic && !cont) return;
+      html += `<div class="summary-item">
+        <div class="summary-topic">${escHtml(topic)}</div>
+        <div class="summary-content">${escHtml(cont)}</div>
+        ${kans ? `<div class="summary-ans">▶ ${escHtml(kans)}</div>` : ''}
+      </div>`;
+    });
+  }
+
+  if (!html) html = '<div class="empty-state"><div class="e-icon">📝</div><div class="e-text">요점정리 데이터가 없습니다</div></div>';
+  el.innerHTML = html;
+}
+
+// 풀이과정 탭
+function renderSolution(el, pageData) {
+  let html = '';
+  const prob = pageData['문제 원문'] || '';
+  const ans  = pageData['정답'] || '';
+  const sol  = pageData['풀이 과정'] || '';
+  const hint = pageData['단계별 힌트'] || '';
+  const hb   = pageData['힌트/보기'] || '';
+  const img  = pageData['이미지 설명'] || '';
+
+  if (prob) html += `<div class="p-card"><div class="p-card-title">📝 문제 원문</div><div class="p-card-body" style="white-space:pre-wrap;font-size:12px">${escHtml(prob)}</div></div>`;
+  if (hb)   html += `<div class="p-card p-hint"><div class="p-card-title">💡 힌트/보기</div><div class="p-card-body" style="white-space:pre-wrap">${escHtml(hb)}</div></div>`;
+  if (sol)  html += `<div class="p-card p-sol"><div class="p-card-title">✏️ 풀이 과정</div><div class="p-card-body" style="white-space:pre-wrap;font-size:12px">${escHtml(sol)}</div></div>`;
+  if (hint) html += `<div class="p-card p-hint"><div class="p-card-title">🪜 단계별 힌트</div><div class="p-card-body" style="white-space:pre-wrap">${escHtml(hint)}</div></div>`;
+  if (ans)  html += `<div class="p-card p-ans"><div class="p-card-title">✅ 정답</div><div class="p-card-body" style="white-space:pre-wrap;font-weight:700">${escHtml(ans)}</div></div>`;
+  if (img)  html += `<div class="p-card"><div class="p-card-title">🖼 이미지 설명</div><div class="p-card-body" style="font-size:12px;color:var(--text2)">${escHtml(img)}</div></div>`;
+
+  if (!html) html = '<div class="empty-state"><div class="e-icon">✏️</div><div class="e-text">풀이 데이터가 없습니다<br><small>수학 과목에서 확인하세요</small></div></div>';
+  el.innerHTML = html;
+}
+
+// 지도 탭
+function renderGuide(el, pageData, pageSum, s2, pid) {
+  let html = '';
+  const guideNote = pageSum['지도 메모'] || '';
+  if (guideNote) html += `<div class="p-card p-guide"><div class="p-card-title">👩‍🏫 이 페이지 지도 메모</div><div class="p-card-body" style="white-space:pre-wrap">${escHtml(guideNote)}</div></div>`;
+
+  // 관련 키워드의 지도 포인트
+  const guideItems = s2.filter(r => {
+    const rp = r['관련 페이지'] || '';
+    return rp.includes(pid) || rp === '';
+  }).filter(r => r['지도 포인트'] || r['자주 틀리는 오류'] || r['질문 예시']);
+
+  if (guideItems.length) {
+    html += `<div class="p-card"><div class="p-card-title">🗝 키워드별 지도 포인트</div></div>`;
+    guideItems.forEach(r => {
+      const term  = r['키워드'] || r['문법 유형'] || r['개념어'] || r['한자'] || r['어휘(한자)'] || r['어휘(일본어)'] || '';
+      const guide = r['지도 포인트'] || '';
+      const err   = r['자주 틀리는 오류'] || '';
+      const q     = r['질문 예시'] || '';
+      if (!guide && !err && !q) return;
+      html += `<div class="kw-item">
+        <div class="kw-term">${escHtml(term)}</div>
+        ${guide ? `<div class="kw-guide">👩‍🏫 ${escHtml(guide)}</div>` : ''}
+        ${err   ? `<div class="kw-err">⚠️ 자주 틀리는 오류: ${escHtml(err)}</div>` : ''}
+        ${q     ? `<div class="kw-q">❓ "${escHtml(q)}"</div>` : ''}
+      </div>`;
+    });
+  }
+
+  if (!html) html = '<div class="empty-state"><div class="e-icon">👩‍🏫</div><div class="e-text">지도 메모를 입력해주세요<br><small>엑셀 파일에서 지도 포인트 컬럼을 채우면<br>이곳에 표시됩니다</small></div></div>';
+  el.innerHTML = html;
+}
+
+// 핵심 사전 탭
+function renderDict(el, s2) {
+  let html = `<div class="p-card"><div class="p-card-title">📚 핵심 개념 사전</div><div class="p-card-body" style="font-size:11px;color:var(--text2)">총 ${s2.length}개 항목</div></div>`;
+  s2.forEach(r => {
+    const keys = Object.keys(r);
+    const term = r[keys[1]] || r['키워드'] || r['문법 유형'] || r['개념어'] || r['한자'] || r['어휘(한자)'] || r['어휘(일본어)'] || '';
+    const def  = r[keys[2]] || r['정의·설명'] || r['구조·설명'] || r['설명'] || r['음·훈'] || r['병음'] || r['읽기(히라가나)'] || '';
+    const ex   = r['예문(영어)'] || r['예문'] || r['주요 한자어'] || r['뜻(한국어)'] || r['문법 포인트'] || '';
+    const page = r['관련 페이지'] || '';
+    html += `<div class="kw-item">
+      <div class="kw-term">${escHtml(term)}</div>
+      <div class="kw-def">${escHtml(def)}</div>
+      ${ex   ? `<div class="kw-q" style="color:var(--sol)">${escHtml(ex)}</div>` : ''}
+      ${page ? `<div class="kw-page">📄 ${escHtml(page)}</div>` : ''}
+    </div>`;
+  });
+  if (!s2.length) html = '<div class="empty-state"><div class="e-icon">📚</div><div class="e-text">사전 데이터가 없습니다</div></div>';
+  el.innerHTML = html;
+}
+
+// ── 전체 검색 ────────────────────────────────────────
+let searchTimer = null;
+function onSearch(q) {
+  clearTimeout(searchTimer);
+  const el = document.getElementById('search-results');
+  if (!q.trim()) { el.style.display = 'none'; return; }
+  searchTimer = setTimeout(() => doSearch(q.trim()), 300);
+}
+
+async function doSearch(q) {
+  const el = document.getElementById('search-results');
+  const results = [];
+  for (const book of allBooks) {
+    try {
+      const res  = await fetch(DATA_BASE + book.key + '.json');
+      const data = await res.json();
+      const s1   = data.sheets?.s1?.data || [];
+      s1.forEach((row, i) => {
+        const combined = Object.values(row).join(' ');
+        if (combined.includes(q)) {
+          results.push({ book, row, idx: i, q });
+          if (results.length >= 20) return;
+        }
+      });
+    } catch(e) {}
+    if (results.length >= 20) break;
+  }
+  renderSearchResults(el, results, q);
+}
+
+function renderSearchResults(el, results, q) {
+  if (!results.length) {
+    el.style.display = 'block';
+    el.innerHTML = '<div class="search-item"><span class="s-text">검색 결과가 없습니다</span></div>';
+    return;
+  }
+  el.style.display = 'block';
+  el.innerHTML = results.map(({ book, row, idx }) => {
+    const pid  = row['페이지ID'] || `${idx+1}p`;
+    const subj = row['학습주제'] || '';
+    const text = highlight(Object.values(row).join(' ').substring(0, 80), q);
+    return `<div class="search-item" onclick="loadBookAndPage('${book.key}',${idx})">
+      <div><span class="s-pid">${pid}</span> <span class="s-subj">${book.subjectKo} ${book.stage}단계</span></div>
+      <div class="s-text">${text}</div>
+    </div>`;
+  }).join('');
+}
+
+async function loadBookAndPage(key, idx) {
+  document.getElementById('search-results').style.display = 'none';
+  document.getElementById('search-input').value = '';
+  const book = allBooks.find(b => b.key === key);
+  if (book) {
+    await loadBook(book);
+    await goToPageIdx(idx);
+  }
+}
+
+function highlight(text, q) {
+  return escHtml(text).replace(new RegExp(escHtml(q), 'g'), `<mark>${escHtml(q)}</mark>`);
+}
+
+// ── 유틸 ─────────────────────────────────────────────
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function showLoading(txt) {
+  document.getElementById('loading').style.display = 'flex';
+  document.getElementById('loading-text').textContent = txt || '로드 중...';
+}
+function hideLoading() {
+  document.getElementById('loading').style.display = 'none';
+}
+
+// 검색창 외부 클릭시 닫기
+document.addEventListener('click', e => {
+  if (!e.target.closest('#search-wrap')) {
+    document.getElementById('search-results').style.display = 'none';
+  }
+});
+
+// ── 시작 ─────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
